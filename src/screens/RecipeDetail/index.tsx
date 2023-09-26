@@ -27,7 +27,7 @@ const RecipeDetail: ScreenProps<'RecipeDetail'> = ({navigation, route}) => {
       <Animated.Image
         sharedTransitionTag={`img${item.idMeal}`}
         resizeMode="cover"
-        className="rounded-3xl mb-2"
+        className="rounded-2xl mb-2"
         style={{height: 300, width: '100%'}}
         source={{uri: item.strMealThumb}}
       />

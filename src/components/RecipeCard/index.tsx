@@ -17,19 +17,26 @@ const RecipeCard: React.FC<Props> = ({item, index, fromSearch}) => {
         .duration(600)
         .springify()}
       className="flex-1  mb-10"
-      style={{flex: 1}}>
+      style={{
+        flex: 1,
+        transform: [
+          {
+            translateY: [10, 5, -5][index % 3],
+          },
+        ],
+      }}>
       <Pressable
         onPress={() => {
           navigate('RecipeDetail', {item});
         }}>
         <Animated.Image
-          className={'rounded-3xl'}
+          className={'rounded-2xl'}
           sharedTransitionTag={
             fromSearch ? `search${item.idMeal}` : `img${item.idMeal}`
           }
           resizeMode="cover"
           style={{
-            height: index % 3 === 0 ? 150 : 200,
+            height: [210, 240, 190][index % 3],
             width: '100%',
             marginBottom: 5,
           }}
