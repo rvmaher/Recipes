@@ -13,24 +13,28 @@ const Home: ScreenProps<'Home'> = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState<string>('');
   const {user} = useAuth();
-  const handleCategoryChange = async (category: string) => {
-    if (category === activeCategory) {
-      return;
-    }
-    setActiveCategory(category);
-    setIsLoading(true);
-    const resp = await fetch(
-      `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`,
-    );
-    const result = await resp.json();
-    setRecipes(result.meals);
-    setIsLoading(false);
-  };
+
+  const handleCategoryChange = React.useCallback(
+    async (category: string) => {
+      if (category === activeCategory) {
+        return;
+      }
+      setActiveCategory(category);
+      setIsLoading(true);
+      const resp = await fetch(
+        `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`,
+      );
+      const result = await resp.json();
+      setRecipes(result.meals);
+      setIsLoading(false);
+    },
+    [activeCategory],
+  );
 
   useEffect(() => {
     handleCategoryChange('Vegetarian');
   }, []);
-  
+
   return (
     <FlatList
       data={['unique']}
