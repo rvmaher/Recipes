@@ -7,7 +7,7 @@ type Recipes = {
 type Meal = {
   idMeal: string;
   strMeal: string;
-  strDrinkAlternate: any;
+  strDrinkAlternate: string;
   strCategory: string;
   strArea: string;
   strInstructions: string;
@@ -29,11 +29,11 @@ type Meal = {
   strIngredient13: string;
   strIngredient14: string;
   strIngredient15: string;
-  strIngredient16: any;
-  strIngredient17: any;
-  strIngredient18: any;
-  strIngredient19: any;
-  strIngredient20: any;
+  strIngredient16: string;
+  strIngredient17: string;
+  strIngredient18: string;
+  strIngredient19: string;
+  strIngredient20: string;
   strMeasure1: string;
   strMeasure2: string;
   strMeasure3: string;
@@ -49,13 +49,13 @@ type Meal = {
   strMeasure13: string;
   strMeasure14: string;
   strMeasure15: string;
-  strMeasure16: any;
-  strMeasure17: any;
-  strMeasure18: any;
-  strMeasure19: any;
-  strMeasure20: any;
-  strSource: any;
-  strImageSource: any;
-  strCreativeCommonsConfirmed: any;
-  dateModified: any;
+  strMeasure16: string;
+  strMeasure17: string;
+  strMeasure18: string;
+  strMeasure19: string;
+  strMeasure20: string;
+  strSource: string;
+  strImageSource: string;
+  strCreativeCommonsConfirmed: string;
+  dateModified: string;
 };
