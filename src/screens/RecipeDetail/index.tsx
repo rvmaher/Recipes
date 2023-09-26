@@ -4,7 +4,7 @@ import Animated, {FadeIn, FadeInUp} from 'react-native-reanimated';
 import Ingredients from '../../components/Ingredients';
 import useAuth from '../../hooks/useAuth';
 import {ScreenProps} from '../../typings/navigation';
-import {fetchApi} from '../../utils/helpers';
+import {fetchApi, randomNumber} from '../../utils/helpers';
 
 const RecipeDetail: ScreenProps<'RecipeDetail'> = ({navigation, route}) => {
   const {item} = route.params;
@@ -74,7 +74,7 @@ const RecipeDetail: ScreenProps<'RecipeDetail'> = ({navigation, route}) => {
               />
             </View>
             <Text className="font-bold text-xs text-neutral-700 text-center">
-              35 Mins
+              {randomNumber(50, item?.idMeal) + 9} Mins
             </Text>
           </View>
           <View
@@ -89,7 +89,7 @@ const RecipeDetail: ScreenProps<'RecipeDetail'> = ({navigation, route}) => {
               />
             </View>
             <Text className="font-bold text-xs text-neutral-700 text-center">
-              03 Servs
+              {randomNumber(5, item?.idMeal) + 2} Servs
             </Text>
           </View>
           <View
@@ -104,7 +104,7 @@ const RecipeDetail: ScreenProps<'RecipeDetail'> = ({navigation, route}) => {
               />
             </View>
             <Text className="font-bold text-xs text-neutral-700 text-center">
-              03 calories
+              {randomNumber(99, item?.idMeal)} calories
             </Text>
           </View>
           <View
@@ -119,7 +119,7 @@ const RecipeDetail: ScreenProps<'RecipeDetail'> = ({navigation, route}) => {
               />
             </View>
             <Text className="font-bold text-xs text-neutral-700 text-center">
-              Easy
+              {['Easy', 'Medium', 'Hard'][randomNumber(3, item?.idMeal)]}
             </Text>
           </View>
         </View>

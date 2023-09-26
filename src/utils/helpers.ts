@@ -8,4 +8,8 @@ const fetchApi = async (url: string) => {
   }
 };
 
-export {fetchApi};
+const randomNumber = (number: number, id: string) => {
+  return Math.ceil(Number(id) % number);
+};
+
+export {fetchApi, randomNumber};
