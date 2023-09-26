@@ -8,9 +8,7 @@ type Props = {
 };
 const SearchInput: React.FC<Props> = ({value, onChangeText, onPress}) => {
   return (
-    <Animated.View
-      sharedTransitionTag="searchtextInput"
-      className="flex-row  bg-gray-200 rounded-full p-1 mb-4 mx-4">
+    <Animated.View className="flex-row  bg-gray-200 rounded-full p-1 mb-4 mx-4">
       <TextInput
         onSubmitEditing={onPress}
         value={value}
@@ -25,9 +23,7 @@ const SearchInput: React.FC<Props> = ({value, onChangeText, onPress}) => {
         <Image
           className="w-12 h-6"
           resizeMode="contain"
-          source={{
-            uri: 'https://img.icons8.com/ios/150/search--v1.png',
-          }}
+          source={require('../../assets/search.png')}
         />
       </Pressable>
     </Animated.View>

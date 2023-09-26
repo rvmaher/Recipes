@@ -1,34 +1,30 @@
-import React, {useEffect, useState} from 'react';
-import {
-  ActivityIndicator,
-  Image,
-  Pressable,
-  ScrollView,
-  Text,
-  View,
-} from 'react-native';
-import Animated, {FadeIn, FadeInUp, ZoomIn} from 'react-native-reanimated';
-import {ScreenProps} from '../../typings/navigation';
+import React, {useEffect, useRef, useState} from 'react';
+import {Image, Pressable, ScrollView, Text, View} from 'react-native';
+import Animated, {FadeIn, FadeInUp, FadeOut} from 'react-native-reanimated';
 import useAuth from '../../hooks/useAuth';
+import {ScreenProps} from '../../typings/navigation';
+import WebView from 'react-native-webview';
+import Switch from '../../components/Switch';
 
 const RecipeDetail: ScreenProps<'RecipeDetail'> = ({navigation, route}) => {
   const {item} = route.params;
-  const [isLoading, setIsLoading] = useState(false);
   const [recipeDetail, setRecipeDetail] = useState<Meal | undefined>(undefined);
   const {handleFavourites, favouriteItems} = useAuth();
-  console.log(favouriteItems);
+
   const getMealDetails = async () => {
-    setIsLoading(true);
     let resp = await fetch(
       `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${item.idMeal}`,
     );
     const result = await resp.json();
     setRecipeDetail(result.meals[0]);
-    setIsLoading(false);
   };
+
+  console.log();
+
   useEffect(() => {
     getMealDetails();
   }, []);
+
   return (
     <ScrollView className="px-2" contentContainerStyle={{paddingBottom: 50}}>
       <Animated.Image
@@ -42,12 +38,13 @@ const RecipeDetail: ScreenProps<'RecipeDetail'> = ({navigation, route}) => {
         entering={FadeIn.delay(500)}
         className="w-full absolute flex-row flex-1 justify-between">
         <Pressable
-          className=" bg-white rounded-full p-3 mx-4 mt-2"
+          className="bg-white rounded-full p-3 mx-4 mt-2"
           onPress={() => navigation.goBack()}>
           <Animated.Image
             resizeMode="cover"
+            tintColor={'grey'}
             style={{height: 20, width: 20}}
-            source={{uri: 'https://img.icons8.com/ios-filled/100/back.png'}}
+            source={require('../../assets/back.png')}
           />
         </Pressable>
         <Pressable
@@ -58,16 +55,12 @@ const RecipeDetail: ScreenProps<'RecipeDetail'> = ({navigation, route}) => {
             tintColor={item?.idMeal in favouriteItems ? 'red' : 'grey'}
             resizeMode="cover"
             style={{height: 20, width: 20}}
-            source={{
-              uri: 'https://img.icons8.com/ios-filled/100/filled-like.png',
-            }}
+            source={require('../../assets/like.png')}
           />
         </Pressable>
       </Animated.View>
       <Animated.View entering={FadeIn.delay(600)}>
         <Text className="text-2xl tracking-widest mb-3 ">{item.strMeal}</Text>
-      </Animated.View>
-      <Animated.View entering={FadeIn.delay(600)}>
         <Text className="text-xl text-neutral-600 tracking-widest mb-3 ">
           {recipeDetail?.strArea}
         </Text>
@@ -164,12 +157,57 @@ const Ingredients = ({recipe}: {recipe: Meal}) => {
             </View>
           ),
       )}
+      <RecipeVideo source={recipe?.strYoutube} />
       <Text className="tracking-widest text-neutral-900 text-3xl mt-4">
         Instructions
       </Text>
       <Text className="text-xl text-neutral-900  tracking-widest">
         {recipe?.strInstructions}
       </Text>
+    </View>
+  );
+};
+
+const RecipeVideo = ({source}: {source: string}) => {
+  const WebviewRef = useRef<WebView>(null);
+  let firstTime = false;
+  let firstUrl = '';
+  const [showVideo, setShowVideo] = useState(false);
+  return (
+    <View>
+      <View className="flex-row justify-between items-center">
+        <Text className="tracking-widest text-neutral-900 text-3xl mt-4 mb-5">
+          Recipe Video
+        </Text>
+        <Switch
+          value={showVideo}
+          onPress={() => {
+            setShowVideo(p => !p);
+          }}
+        />
+      </View>
+      {showVideo && (
+        <Animated.View entering={FadeInUp.duration(200).springify()}>
+          <WebView
+            ref={WebviewRef}
+            allowsFullscreenVideo
+            onLoadEnd={e => {
+              if (!firstTime) {
+                firstTime = true;
+                firstUrl = e.nativeEvent.url;
+              }
+            }}
+            onLoadStart={e => {
+              if (firstTime && e.nativeEvent.url !== firstUrl) {
+                WebviewRef.current?.stopLoading();
+                WebviewRef.current?.goBack();
+              }
+            }}
+            style={{height: 400}}
+            source={{uri: source}}
+          />
+        </Animated.View>
+      )}
     </View>
   );
 };

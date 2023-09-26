@@ -6,6 +6,7 @@ import {ScreenProps} from '../../typings/navigation';
 import useAuth from '../../hooks/useAuth';
 import Animated, {SlideInLeft} from 'react-native-reanimated';
 import SearchInput from '../../components/SearchInput';
+import Switch from '../../components/Switch';
 
 const Home: ScreenProps<'Home'> = ({navigation}) => {
   const [activeCategory, setActiveCategory] = useState('');
