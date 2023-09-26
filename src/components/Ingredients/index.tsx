@@ -17,7 +17,7 @@ const Ingredients = ({recipe}: {recipe: Meal | any}) => {
             return;
           }
           return (
-            <View key={idx} className="flex-row items-center space-y-1">
+            <View key={idx} className="flex-row space-y-1 items-baseline">
               <View className="bg-amber-400  rounded-full w-3 h-3 mx-2"></View>
               <Text className="text-xl text-neutral-900  tracking-widest">
                 {recipe?.[objKey1]}
