@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, Image, StatusBar, Text, TextInput, View} from 'react-native';
+import {FlatList, StatusBar, Text, View} from 'react-native';
+import Animated, {SlideInLeft} from 'react-native-reanimated';
 import Categories from '../../components/Categories';
 import Recipes from '../../components/Recipes';
-import {ScreenProps} from '../../typings/navigation';
-import useAuth from '../../hooks/useAuth';
-import Animated, {SlideInLeft} from 'react-native-reanimated';
 import SearchInput from '../../components/SearchInput';
-import Switch from '../../components/Switch';
+import useAuth from '../../hooks/useAuth';
+import {ScreenProps} from '../../typings/navigation';
 
 const Home: ScreenProps<'Home'> = ({navigation}) => {
   const [activeCategory, setActiveCategory] = useState('');
@@ -30,13 +29,13 @@ const Home: ScreenProps<'Home'> = ({navigation}) => {
 
   useEffect(() => {
     handleCategoryChange('Vegetarian');
-    navigation.addListener('blur', () => {
-      setSearch('');
-    });
   }, []);
+  
   return (
     <FlatList
       data={['unique']}
+      className="space-y-3 pt-10"
+      contentContainerStyle={{paddingBottom: 50}}
       renderItem={() => {
         return (
           <>
@@ -77,8 +76,6 @@ const Home: ScreenProps<'Home'> = ({navigation}) => {
           </>
         );
       }}
-      className="space-y-3 pt-10"
-      contentContainerStyle={{paddingBottom: 50}}
     />
   );
 };

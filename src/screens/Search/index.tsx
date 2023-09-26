@@ -4,7 +4,7 @@ import {ScreenProps} from '../../typings/navigation';
 import SearchInput from '../../components/SearchInput';
 import Recipes from '../../components/Recipes';
 
-const Search: ScreenProps<'Search'> = ({navigation, route}) => {
+const Search: ScreenProps<'Search'> = ({route}) => {
   const {searchString} = route.params;
   const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState<string>(searchString);

@@ -1,10 +1,9 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, Pressable, ScrollView, Text, View} from 'react-native';
-import Animated, {FadeIn, FadeInUp, FadeOut} from 'react-native-reanimated';
+import Animated, {FadeIn, FadeInUp} from 'react-native-reanimated';
+import Ingredients from '../../components/Ingredients';
 import useAuth from '../../hooks/useAuth';
 import {ScreenProps} from '../../typings/navigation';
-import WebView from 'react-native-webview';
-import Switch from '../../components/Switch';
 
 const RecipeDetail: ScreenProps<'RecipeDetail'> = ({navigation, route}) => {
   const {item} = route.params;
@@ -18,8 +17,6 @@ const RecipeDetail: ScreenProps<'RecipeDetail'> = ({navigation, route}) => {
     const result = await resp.json();
     setRecipeDetail(result.meals[0]);
   };
-
-  console.log();
 
   useEffect(() => {
     getMealDetails();
@@ -133,85 +130,3 @@ const RecipeDetail: ScreenProps<'RecipeDetail'> = ({navigation, route}) => {
 };
 
 export default RecipeDetail;
-
-const Ingredients = ({recipe}: {recipe: Meal}) => {
-  return (
-    <View className="mt-2 space-y-2">
-      <Text className="tracking-widest text-neutral-900 text-3xl mb-2">
-        Ingredients
-      </Text>
-      {IngredientsLength.map(
-        i =>
-          recipe?.['strIngredient' + i] && (
-            <View key={i} className="flex-row items-center space-y-1">
-              <View className="bg-amber-400  rounded-full w-3 h-3 mx-2"></View>
-              <Text
-                className="text-xl text-neutral-900  tracking-widest"
-                key={i}>
-                {recipe?.['strIngredient' + i]}
-                {' - '}
-                <Text className="text-lg text-neutral-800">
-                  {recipe?.['strMeasure' + i]}
-                </Text>
-              </Text>
-            </View>
-          ),
-      )}
-      <RecipeVideo source={recipe?.strYoutube} />
-      <Text className="tracking-widest text-neutral-900 text-3xl mt-4">
-        Instructions
-      </Text>
-      <Text className="text-xl text-neutral-900  tracking-widest">
-        {recipe?.strInstructions}
-      </Text>
-    </View>
-  );
-};
-
-const RecipeVideo = ({source}: {source: string}) => {
-  const WebviewRef = useRef<WebView>(null);
-  let firstTime = false;
-  let firstUrl = '';
-  const [showVideo, setShowVideo] = useState(false);
-  return (
-    <View>
-      <View className="flex-row justify-between items-center">
-        <Text className="tracking-widest text-neutral-900 text-3xl mt-4 mb-5">
-          Recipe Video
-        </Text>
-        <Switch
-          value={showVideo}
-          onPress={() => {
-            setShowVideo(p => !p);
-          }}
-        />
-      </View>
-      {showVideo && (
-        <Animated.View entering={FadeInUp.duration(200).springify()}>
-          <WebView
-            ref={WebviewRef}
-            allowsFullscreenVideo
-            onLoadEnd={e => {
-              if (!firstTime) {
-                firstTime = true;
-                firstUrl = e.nativeEvent.url;
-              }
-            }}
-            onLoadStart={e => {
-              if (firstTime && e.nativeEvent.url !== firstUrl) {
-                WebviewRef.current?.stopLoading();
-                WebviewRef.current?.goBack();
-              }
-            }}
-            style={{height: 400}}
-            source={{uri: source}}
-          />
-        </Animated.View>
-      )}
-    </View>
-  );
-};
-
-const IngredientsLength = Array(20)
-  .fill('')
-  .map((_, idx) => idx + 1);

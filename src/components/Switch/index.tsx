@@ -1,11 +1,10 @@
 import React from 'react';
-import {Pressable} from 'react-native';
+import { Pressable } from 'react-native';
 import Animated, {
   interpolateColor,
   useAnimatedStyle,
   useDerivedValue,
-  useSharedValue,
-  withSpring,
+  withSpring
 } from 'react-native-reanimated';
 
 const Switch = ({onPress, value}: {value: boolean; onPress: () => void}) => {

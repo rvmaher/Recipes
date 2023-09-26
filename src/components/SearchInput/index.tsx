@@ -1,11 +1,13 @@
-import {View, Text, Image, TextInput, Pressable} from 'react-native';
 import React from 'react';
+import {Image, Pressable, TextInput} from 'react-native';
 import Animated from 'react-native-reanimated';
+
 type Props = {
   onPress: () => void;
   value: string;
   onChangeText: (text: string) => void;
 };
+
 const SearchInput: React.FC<Props> = ({value, onChangeText, onPress}) => {
   return (
     <Animated.View className="flex-row  bg-gray-200 rounded-full p-1 mb-4 mx-4">

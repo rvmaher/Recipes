@@ -1,7 +1,6 @@
-import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {ActivityIndicator, FlatList, Pressable, Text, View} from 'react-native';
-import Animated, {FadeInDown, FadeInUp} from 'react-native-reanimated';
+import {ActivityIndicator, FlatList, Text, View} from 'react-native';
+import RecipeCard from '../RecipeCard';
 
 const Recipes = ({
   recipes,
@@ -30,7 +29,7 @@ const Recipes = ({
           contentContainerStyle={{marginBottom: 20}}
           data={recipes}
           renderItem={({index, item}) => (
-            <CardItem item={item} index={index} fromSearch={fromSearch} />
+            <RecipeCard item={item} index={index} fromSearch={fromSearch} />
           )}
         />
       )}
@@ -39,45 +38,3 @@ const Recipes = ({
 };
 
 export default Recipes;
-
-const CardItem = ({
-  item,
-  index,
-  fromSearch,
-}: {
-  item: Recipes;
-  index: number;
-  fromSearch: boolean;
-}) => {
-  const {navigate} = useNavigation();
-  return (
-    <Animated.View
-      entering={FadeInDown.delay(150 * index)
-        .duration(600)
-        .springify()}
-      className="flex-1  mb-10"
-      style={{flex: 1}}>
-      <Pressable
-        onPress={() => {
-          navigate('RecipeDetail', {item});
-        }}>
-        <Animated.Image
-          className={'rounded-3xl'}
-          sharedTransitionTag={
-            fromSearch ? `search${item.idMeal}` : `img${item.idMeal}`
-          }
-          resizeMode="cover"
-          style={{
-            height: index % 3 === 0 ? 150 : 200,
-            width: '100%',
-            marginBottom: 5,
-          }}
-          source={{uri: item.strMealThumb}}
-        />
-      </Pressable>
-      <Text numberOfLines={1} className="font-semibold ml-2 font-neutral-300">
-        {item.strMeal}
-      </Text>
-    </Animated.View>
-  );
-};

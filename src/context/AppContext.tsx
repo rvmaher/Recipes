@@ -1,13 +1,7 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createContext, useEffect, useState} from 'react';
-import {Alert} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {AppContextType} from '../typings/appContext';
 
-type AppContextType = {
-  user: string;
-  handleUser: (user: string) => void;
-  favouriteItems: {[key: string]: string};
-  handleFavourites: (id: string) => void;
-};
 export const AppContext = createContext<AppContextType>({
   user: '',
   handleUser: () => {},
@@ -30,6 +24,7 @@ const AppProvider = ({children}: {children: JSX.Element}) => {
     }
     await AsyncStorage.setItem('favs', JSON.stringify(favouriteItems));
   };
+
   const getUser = async () => {
     const _user = await AsyncStorage.getItem('user');
     if (_user) {
@@ -38,10 +33,12 @@ const AppProvider = ({children}: {children: JSX.Element}) => {
       if (_favs) setFavouriteItems(JSON.parse(_favs));
     }
   };
+
   const handleUser = async (name: string) => {
     setUser(name);
     await AsyncStorage.setItem('user', name);
   };
+
   useEffect(() => {
     getUser();
   }, []);
