@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import RecipeVideo from '../RecipeVideo';
+import {KeyPair} from '../../typings/common';
 
-type KeyPair = Record<string, string>;
 const Ingredients = ({recipe}: {recipe: Meal}) => {
   return (
     <View className="mt-2 space-y-2">
@@ -14,7 +14,7 @@ const Ingredients = ({recipe}: {recipe: Meal}) => {
         .map((_, idx) => {
           let val1 = (recipe as KeyPair)?.['strIngredient' + (idx + 1)];
           let val2 = (recipe as KeyPair)?.['strMeasure' + (idx + 1)];
-          if (val1) {
+          if (!val1) {
             return;
           }
           return (

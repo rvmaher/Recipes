@@ -1,4 +1,4 @@
-type Recipes = {
+type Recipe = {
   strMeal: string;
   strMealThumb: string;
   idMeal: string;

@@ -3,19 +3,19 @@ import React, {useEffect, useState} from 'react';
 import {ScreenProps} from '../../typings/navigation';
 import SearchInput from '../../components/SearchInput';
 import Recipes from '../../components/Recipes';
+import {fetchApi} from '../../utils/helpers';
 
 const Search: ScreenProps<'Search'> = ({route}) => {
   const {searchString} = route.params;
   const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState<string>(searchString);
-  const [recipes, setRecipes] = useState<Recipes[]>([]);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
   const searchRecipes = async () => {
     setIsLoading(true);
-    const resp = await fetch(
+    const result = await fetchApi(
       `https://www.themealdb.com/api/json/v1/1/search.php?s=${search}`,
     );
-    const result = await resp.json();
-    setRecipes(result.meals);
+    setRecipes(result);
     setIsLoading(false);
   };
 

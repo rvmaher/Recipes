@@ -10,13 +10,14 @@ import useAuth from '../hooks/useAuth';
 import Search from '../screens/Search';
 
 const {Navigator, Screen} = createNativeStackNavigator<MainStackScreenParams>();
+
 const MainNav = () => {
   const {user} = useAuth();
   return (
     <SafeAreaView style={{flex: 1}}>
       <NavigationContainer>
         <Navigator
-          screenOptions={{animation: 'simple_push', headerShown: false}}>
+          screenOptions={{animation: 'slide_from_left', headerShown: false}}>
           {!user && <Screen name="Welcome" component={Welcome} />}
           <Screen name="Home" component={Home} />
           <Screen name="RecipeDetail" component={RecipeDetail} />

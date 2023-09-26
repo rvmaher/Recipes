@@ -4,6 +4,7 @@ import Animated, {FadeIn, FadeInUp} from 'react-native-reanimated';
 import Ingredients from '../../components/Ingredients';
 import useAuth from '../../hooks/useAuth';
 import {ScreenProps} from '../../typings/navigation';
+import {fetchApi} from '../../utils/helpers';
 
 const RecipeDetail: ScreenProps<'RecipeDetail'> = ({navigation, route}) => {
   const {item} = route.params;
@@ -11,11 +12,10 @@ const RecipeDetail: ScreenProps<'RecipeDetail'> = ({navigation, route}) => {
   const {handleFavourites, favouriteItems} = useAuth();
 
   const getMealDetails = async () => {
-    let resp = await fetch(
+    let result = await fetchApi(
       `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${item.idMeal}`,
     );
-    const result = await resp.json();
-    setRecipeDetail(result.meals[0]);
+    setRecipeDetail(result[0]);
   };
 
   useEffect(() => {

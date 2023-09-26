@@ -2,15 +2,13 @@ import React from 'react';
 import {ActivityIndicator, FlatList, Text, View} from 'react-native';
 import RecipeCard from '../RecipeCard';
 
-const Recipes = ({
-  recipes,
-  isLoading,
-  fromSearch,
-}: {
-  recipes: Recipes[];
+type Props = {
+  recipes: Recipe[];
   isLoading: boolean;
   fromSearch: boolean;
-}) => {
+};
+
+const Recipes: React.FC<Props> = ({recipes, isLoading, fromSearch}) => {
   return (
     <View className="px-4">
       <Text className="font-bold text-3xl tracking-wide mb-5">Recipes</Text>

@@ -6,10 +6,11 @@ import Recipes from '../../components/Recipes';
 import SearchInput from '../../components/SearchInput';
 import useAuth from '../../hooks/useAuth';
 import {ScreenProps} from '../../typings/navigation';
+import {fetchApi} from '../../utils/helpers';
 
 const Home: ScreenProps<'Home'> = ({navigation}) => {
   const [activeCategory, setActiveCategory] = useState('');
-  const [recipes, setRecipes] = useState<Recipes[]>([]);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState<string>('');
   const {user} = useAuth();
@@ -21,11 +22,10 @@ const Home: ScreenProps<'Home'> = ({navigation}) => {
       }
       setActiveCategory(category);
       setIsLoading(true);
-      const resp = await fetch(
+      const result = await fetchApi(
         `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`,
       );
-      const result = await resp.json();
-      setRecipes(result.meals);
+      setRecipes(result);
       setIsLoading(false);
     },
     [activeCategory],
@@ -48,17 +48,14 @@ const Home: ScreenProps<'Home'> = ({navigation}) => {
               <Animated.Text
                 entering={SlideInLeft.delay(600).springify()}
                 className="text-neutral-500 text-base tracking-widest ">
-                Hello,
-                <Text className="text-amber-400  font-bold"> {user}!</Text>
+                Hello,{' '}
+                <Text className="text-amber-400  font-bold">{user}!</Text>
               </Animated.Text>
-              <Text className="font-medium text-3xl text-neutral-400 tracking-wider">
+              <Text className="font-medium text-3xl text-neutral-400 tracking-wider ">
                 Make your own food,
               </Text>
               <Text className="text-neutral-500 text-xl tracking-wider">
-                stay at{' '}
-                <Text className="text-amber-400  font-bold uppercase">
-                  Home
-                </Text>
+                stay at <Text className="text-amber-400  font-bold">Home</Text>
               </Text>
             </View>
             <SearchInput

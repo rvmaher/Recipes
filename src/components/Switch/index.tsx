@@ -1,13 +1,15 @@
 import React from 'react';
-import { Pressable } from 'react-native';
+import {Pressable} from 'react-native';
 import Animated, {
   interpolateColor,
   useAnimatedStyle,
   useDerivedValue,
-  withSpring
+  withSpring,
 } from 'react-native-reanimated';
 
-const Switch = ({onPress, value}: {value: boolean; onPress: () => void}) => {
+type Props = {value: boolean; onPress: () => void};
+
+const Switch: React.FC<Props> = ({onPress, value}) => {
   const switchVal = useDerivedValue(() => {
     return withSpring(value ? 28 : 0);
   }, [value]);

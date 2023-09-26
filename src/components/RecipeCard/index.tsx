@@ -1,16 +1,15 @@
+import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Pressable, Text} from 'react-native';
 import Animated, {FadeInDown} from 'react-native-reanimated';
 
-const RecipeCard = ({
-  item,
-  index,
-  fromSearch,
-}: {
-  item: Recipes;
+type Props = {
+  item: Recipe;
   index: number;
   fromSearch: boolean;
-}) => {
+};
+
+const RecipeCard: React.FC<Props> = ({item, index, fromSearch}) => {
   const {navigate} = useNavigation();
   return (
     <Animated.View

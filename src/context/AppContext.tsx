@@ -1,6 +1,7 @@
 import {createContext, useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AppContextType} from '../typings/appContext';
+import {KeyPair} from '../typings/common';
 
 export const AppContext = createContext<AppContextType>({
   user: '',
@@ -11,13 +12,11 @@ export const AppContext = createContext<AppContextType>({
 
 const AppProvider = ({children}: {children: JSX.Element}) => {
   const [user, setUser] = useState<string>('');
-  const [favouriteItems, setFavouriteItems] = useState<{[key: string]: string}>(
-    {},
-  );
+  const [favouriteItems, setFavouriteItems] = useState<KeyPair>({});
 
   const handleFavourites = async (mealId: string) => {
     if (mealId in favouriteItems) {
-      delete favouriteItems?.[mealId];
+      delete favouriteItems[mealId];
       setFavouriteItems({...favouriteItems});
     } else {
       setFavouriteItems(p => ({...p, [mealId]: mealId}));
