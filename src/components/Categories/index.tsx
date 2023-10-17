@@ -16,7 +16,7 @@ const Categories: React.FC<Props> = ({activeCategory, setActiveCategory}) => {
       className="mb-5 space-x-4">
       {categories.map((i, idx) => {
         let activeClass =
-          activeCategory === i.strCategory ? 'bg-amber-400' : 'bg-black/10';
+          activeCategory === i.strCategory ? themeColor : 'rgba(0,0,0,0.1)';
         return (
           <Pressable
             key={i.strCategory}
@@ -28,7 +28,9 @@ const Categories: React.FC<Props> = ({activeCategory, setActiveCategory}) => {
                 .delay(idx * 100)
                 .springify()}
               className={'justify-center items-center'}>
-              <View className={'rounded-full p-1 mb-2 ' + activeClass}>
+              <View
+                style={{backgroundColor: activeClass}}
+                className={'rounded-full p-1 mb-2 '}>
                 <Image
                   resizeMode="center"
                   className={'h-20 w-20'}

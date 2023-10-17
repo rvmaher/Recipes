@@ -4,9 +4,10 @@ import {ScreenProps} from '../../typings/navigation';
 import SearchInput from '../../components/SearchInput';
 import Recipes from '../../components/Recipes';
 import {fetchApi} from '../../utils/helpers';
+import DrawerSceneWrapper from '../../components/WrapperComponent';
 
 const Search: ScreenProps<'Search'> = ({route}) => {
-  const {searchString} = route.params;
+  const {searchString = ''} = route?.params || '';
   const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState<string>(searchString);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -25,14 +26,16 @@ const Search: ScreenProps<'Search'> = ({route}) => {
   }, []);
 
   return (
-    <View className=" py-10">
-      <SearchInput
-        onChangeText={setSearch}
-        onPress={searchRecipes}
-        value={search}
-      />
-      <Recipes isLoading={isLoading} recipes={recipes} fromSearch={true} />
-    </View>
+    <DrawerSceneWrapper>
+      <View className=" py-10">
+        <SearchInput
+          onChangeText={setSearch}
+          onPress={searchRecipes}
+          value={search}
+        />
+        <Recipes isLoading={isLoading} recipes={recipes} fromSearch={true} />
+      </View>
+    </DrawerSceneWrapper>
   );
 };
 

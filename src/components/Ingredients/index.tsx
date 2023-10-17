@@ -20,7 +20,9 @@ const Ingredients = ({recipe}: {recipe: Meal}) => {
           }
           return (
             <View key={idx} className="flex-row space-y-1 items-baseline">
-              <View className="bg-amber-400  rounded-full w-3 h-3 mx-2"></View>
+              <View
+                style={{backgroundColor: themeColor}}
+                className=" rounded-full w-3 h-3 mx-2"></View>
               <Text className="text-xl text-neutral-900  tracking-widest">
                 {val1}
                 {' - '}

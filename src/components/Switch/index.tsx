@@ -6,10 +6,12 @@ import Animated, {
   useDerivedValue,
   withSpring,
 } from 'react-native-reanimated';
+import useAuth from '../../hooks/useAuth';
 
 type Props = {value: boolean; onPress: () => void};
 
 const Switch: React.FC<Props> = ({onPress, value}) => {
+  const {themeColor} = useAuth();
   const switchVal = useDerivedValue(() => {
     return withSpring(value ? 28 : 0);
   }, [value]);
@@ -25,7 +27,7 @@ const Switch: React.FC<Props> = ({onPress, value}) => {
       backgroundColor: interpolateColor(
         switchVal.value,
         [0, 30],
-        ['grey', '#FFBF00'],
+        ['grey', themeColor],
       ),
     };
   });

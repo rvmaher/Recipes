@@ -13,7 +13,7 @@ const Recipes: React.FC<Props> = ({recipes, isLoading, fromSearch}) => {
   return (
     <View className="px-4">
       <Text className="font-bold text-3xl tracking-wide mb-5">Recipes</Text>
-      {(isLoading && <ActivityIndicator color={'#FFBF00'} size={48} />) || (
+      {(isLoading && <ActivityIndicator color={themeColor} size={48} />) || (
         <FlatList
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={
