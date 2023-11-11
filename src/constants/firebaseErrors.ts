@@ -1,4 +1,4 @@
-import {KeyPair} from '../typings/common';
+import {KeyPair} from '@typings/common';
 
 const FIREBASE_ERRORS: KeyPair = {
   'auth/invalid-email': 'The email address is invalid.',

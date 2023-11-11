@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import RecipeVideo from '../RecipeVideo';
-import {KeyPair} from '../../typings/common';
-import {Meal} from '../../typings/recipeAndMeal';
+import RecipeVideo from '@components/RecipeVideo';
+import {KeyPair} from '@typings/common';
+import {Meal} from '@typings/recipeAndMeal';
 
 const Ingredients = ({recipe}: {recipe: Meal}) => {
   return (

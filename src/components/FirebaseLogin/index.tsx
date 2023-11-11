@@ -1,5 +1,3 @@
-import auth from '@react-native-firebase/auth';
-import {useFormik} from 'formik';
 import React, {useState} from 'react';
 import {
   ActivityIndicator,
@@ -8,9 +6,11 @@ import {
   ToastAndroid,
   View,
 } from 'react-native';
-import {FIREBASE_ERRORS} from '../../constants/firebaseErrors';
-import {user_iv, validationSchema} from '../../typings/user';
-import CapsuleButton from '../CapsuleButton';
+import CapsuleButton from '@components/CapsuleButton';
+import {FIREBASE_ERRORS} from '@constants/firebaseErrors';
+import auth from '@react-native-firebase/auth';
+import {user_iv, validationSchema} from '@typings/user';
+import {useFormik} from 'formik';
 import Animated, {FadeIn} from 'react-native-reanimated';
 
 const FirebaseLogin = () => {

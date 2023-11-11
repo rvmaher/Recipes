@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {Image, Modal, StatusBar, Text, View} from 'react-native';
+import FirebaseLogin from '@components/FirebaseLogin';
+import {ScreenProps} from '@typings/navigation';
 import Animated, {
   useSharedValue,
   withDelay,
   withSpring,
 } from 'react-native-reanimated';
-import FirebaseLogin from '../../components/FirebaseLogin';
-import {ScreenProps} from '../../typings/navigation';
 
 const Login: ScreenProps<'Login'> = ({}) => {
   const ring1 = useSharedValue(0);

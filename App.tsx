@@ -1,7 +1,7 @@
 import React from 'react';
 import {Provider as RTKProvider} from 'react-redux';
-import MainNav from './src/navigation/MainNav';
-import store from './src/store/store';
+import MainNav from '@navigation/MainNav';
+import store from '@store/store';
 
 const App = () => {
   return (

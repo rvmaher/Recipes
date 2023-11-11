@@ -1,7 +1,7 @@
 import React from 'react';
 import {Image, Text, View} from 'react-native';
-import {RECIPE_STATS, Recipe} from '../../typings/recipeAndMeal';
-import {getStat} from '../../utils/helpers';
+import {RECIPE_STATS, Recipe} from '@typings/recipeAndMeal';
+import {getStat} from '@utils/helpers';
 
 type Props = {
   item: Recipe;

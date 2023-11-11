@@ -1,7 +1,7 @@
 import React from 'react';
 import {Image, Pressable, ScrollView, Text, View} from 'react-native';
+import {Category, categories} from '@constants/categories';
 import Animated, {FadeInDown} from 'react-native-reanimated';
-import {Category, categories} from '../../constants/categories';
 
 type Props = {
   activeCategory: Category;

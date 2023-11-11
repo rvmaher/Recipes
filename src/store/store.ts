@@ -1,6 +1,6 @@
 import {configureStore} from '@reduxjs/toolkit';
-import authReducer from './features/authSlice';
-import {recipeApi} from './queries/recipeQuery';
+import authReducer from '@store/features/authSlice';
+import {recipeApi} from '@store/queries/recipeQuery';
 
 const store = configureStore({
   reducer: {authReducer, [recipeApi.reducerPath]: recipeApi.reducer},

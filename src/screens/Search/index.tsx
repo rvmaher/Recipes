@@ -1,9 +1,9 @@
+import Recipes from '@components/Recipes';
+import SearchInput from '@components/SearchInput';
+import {useLazyGetRecipeBySearchstringQuery} from '@store/queries/recipeQuery';
+import {ScreenProps} from '@typings/navigation';
 import React, {useEffect, useState} from 'react';
 import {View} from 'react-native';
-import Recipes from '../../components/Recipes';
-import SearchInput from '../../components/SearchInput';
-import {useLazyGetRecipeBySearchstringQuery} from '../../store/queries/recipeQuery';
-import {ScreenProps} from '../../typings/navigation';
 
 const Search: ScreenProps<'Search'> = ({route}) => {
   const {searchString = ''} = route.params;

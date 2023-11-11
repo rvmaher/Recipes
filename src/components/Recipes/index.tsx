@@ -1,7 +1,7 @@
 import React from 'react';
 import {ActivityIndicator, FlatList, Text, View} from 'react-native';
-import RecipeCard from '../RecipeCard';
-import {Recipe} from '../../typings/recipeAndMeal';
+import RecipeCard from '@components/RecipeCard';
+import {Recipe} from '@typings/recipeAndMeal';
 
 type Props = {
   recipes: Recipe[];
@@ -30,12 +30,7 @@ const Recipes: React.FC<Props> = ({recipes, isLoading, fromSearch}) => {
           contentContainerStyle={{paddingBottom: 200}}
           data={recipes.slice(0, 19)}
           renderItem={({index, item}) => (
-            <RecipeCard
-              // key={item.idMeal}
-              item={item}
-              index={index}
-              fromSearch={fromSearch}
-            />
+            <RecipeCard item={item} index={index} fromSearch={fromSearch} />
           )}
         />
       )}

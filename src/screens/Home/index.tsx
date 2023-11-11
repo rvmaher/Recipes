@@ -1,14 +1,15 @@
+import CapsuleButton from '@components/CapsuleButton';
+import Categories from '@components/Categories';
+import Recipes from '@components/Recipes';
+import SearchInput from '@components/SearchInput';
+import {Category} from '@constants/categories';
 import auth from '@react-native-firebase/auth';
+import {useGetRecipeByCategoryQuery} from '@store/queries/recipeQuery';
+import {ScreenProps} from '@typings/navigation';
 import React, {useState} from 'react';
 import {FlatList, StatusBar, Text, ToastAndroid, View} from 'react-native';
 import Animated, {SlideInLeft} from 'react-native-reanimated';
-import CapsuleButton from '../../components/CapsuleButton';
-import Categories from '../../components/Categories';
-import Recipes from '../../components/Recipes';
-import SearchInput from '../../components/SearchInput';
-import {Category} from '../../constants/categories';
-import {useGetRecipeByCategoryQuery} from '../../store/queries/recipeQuery';
-import {ScreenProps} from '../../typings/navigation';
+
 const Home: ScreenProps<'Home'> = ({navigation}) => {
   const [activeCategory, setActiveCategory] = useState<Category>('Starter');
   const [search, setSearch] = useState<string>('');
