@@ -17,10 +17,10 @@ const SearchInput: React.FC<Props> = ({value, onChangeText, onPress}) => {
         onChangeText={onChangeText}
         placeholderTextColor={'grey'}
         placeholder="Search Recipes"
-        className="flex-1 tracking-widest text-neutral-500 font-extrabold pl-6"
+        className="flex-1 h-10 tracking-widest text-neutral-500 font-extrabold pl-6"
       />
       <Pressable
-        className="justify-center bg-white/80 shadow-lg rounded-3xl mx-1"
+        className="justify-center bg-white/80  rounded-3xl mx-1"
         onPress={onPress}>
         <Image
           className="w-12 h-6"

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "126579443234",
+    "project_id": "recipes-bcb71",
+    "storage_bucket": "recipes-bcb71.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:126579443234:android:d9489faca011993ddf2c7b",
+        "android_client_info": {
+          "package_name": "com.recipes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG1oT9aGU38Tl7XG740V8vnct2jekKjPg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

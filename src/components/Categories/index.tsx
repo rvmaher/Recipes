@@ -1,17 +1,18 @@
 import React from 'react';
 import {Image, Pressable, ScrollView, Text, View} from 'react-native';
+import {Category, categories} from '@constants/categories';
 import Animated, {FadeInDown} from 'react-native-reanimated';
-import {categories} from '../../constants/categories';
 
 type Props = {
-  activeCategory: string;
-  setActiveCategory: (category: string) => void;
+  activeCategory: Category;
+  setActiveCategory: (category: Category) => void;
 };
 
 const Categories: React.FC<Props> = ({activeCategory, setActiveCategory}) => {
   return (
     <ScrollView
       horizontal
+      showsHorizontalScrollIndicator={false}
       contentContainerStyle={{paddingHorizontal: 20}}
       className="mb-5 space-x-4">
       {categories.map((i, idx) => {

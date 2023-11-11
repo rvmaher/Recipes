@@ -1,44 +1,39 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, StatusBar, Text, View} from 'react-native';
+import CapsuleButton from '@components/CapsuleButton';
+import Categories from '@components/Categories';
+import Recipes from '@components/Recipes';
+import SearchInput from '@components/SearchInput';
+import {Category} from '@constants/categories';
+import auth from '@react-native-firebase/auth';
+import {useGetRecipeByCategoryQuery} from '@store/queries/recipeQuery';
+import {ScreenProps} from '@typings/navigation';
+import React, {useState} from 'react';
+import {FlatList, StatusBar, Text, ToastAndroid, View} from 'react-native';
 import Animated, {SlideInLeft} from 'react-native-reanimated';
-import Categories from '../../components/Categories';
-import Recipes from '../../components/Recipes';
-import SearchInput from '../../components/SearchInput';
-import useAuth from '../../hooks/useAuth';
-import {ScreenProps} from '../../typings/navigation';
-import {fetchApi} from '../../utils/helpers';
 
 const Home: ScreenProps<'Home'> = ({navigation}) => {
-  const [activeCategory, setActiveCategory] = useState('');
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<Category>('Starter');
   const [search, setSearch] = useState<string>('');
-  const {user} = useAuth();
 
-  const handleCategoryChange = React.useCallback(
-    async (category: string) => {
-      if (category === activeCategory) {
-        return;
-      }
-      setActiveCategory(category);
-      setIsLoading(true);
-      const result = await fetchApi(
-        `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`,
-      );
-      setRecipes(result);
-      setIsLoading(false);
-    },
-    [activeCategory],
-  );
+  const handleLogout = async () => {
+    await auth().signOut();
+    ToastAndroid.show('Logged out successfully!', 400);
+  };
 
-  useEffect(() => {
-    handleCategoryChange('Vegetarian');
-  }, []);
+  const {
+    data: recipes = [],
+    isLoading,
+    isFetching,
+  } = useGetRecipeByCategoryQuery(activeCategory);
 
   return (
     <FlatList
+      className="py-2"
       data={['unique']}
-      className="space-y-3 pt-10"
+      ListHeaderComponent={
+        <View className="self-end mr-5 rounded">
+          <CapsuleButton btnText="Logout" onPress={handleLogout} />
+        </View>
+      }
       contentContainerStyle={{paddingBottom: 50}}
       renderItem={() => {
         return (
@@ -48,14 +43,13 @@ const Home: ScreenProps<'Home'> = ({navigation}) => {
               <Animated.Text
                 entering={SlideInLeft.delay(600).springify()}
                 className="text-neutral-500 text-base tracking-widest ">
-                Hello,{' '}
-                <Text className="text-amber-400  font-bold">{user}!</Text>
+                Hello<Text className="text-amber-400 font-bold">!</Text>
               </Animated.Text>
               <Text className="font-medium text-3xl text-neutral-400 tracking-wider ">
                 Make your own food,
               </Text>
               <Text className="text-neutral-500 text-xl tracking-wider">
-                stay at <Text className="text-amber-400  font-bold">Home</Text>
+                stay at <Text className="text-amber-400 font-bold">Home</Text>
               </Text>
             </View>
             <SearchInput
@@ -67,11 +61,11 @@ const Home: ScreenProps<'Home'> = ({navigation}) => {
             />
             <Categories
               activeCategory={activeCategory}
-              setActiveCategory={handleCategoryChange}
+              setActiveCategory={setActiveCategory}
             />
             <Recipes
               recipes={recipes}
-              isLoading={isLoading}
+              isLoading={isLoading || isFetching}
               fromSearch={false}
             />
           </>

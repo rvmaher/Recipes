@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Pressable, Text} from 'react-native';
 import Animated, {FadeInDown} from 'react-native-reanimated';
+import {Recipe} from '@typings/recipeAndMeal';
 
 type Props = {
   item: Recipe;
@@ -31,9 +32,9 @@ const RecipeCard: React.FC<Props> = ({item, index, fromSearch}) => {
         }}>
         <Animated.Image
           className={'rounded-2xl'}
-          sharedTransitionTag={
-            fromSearch ? `search${item.idMeal}` : `img${item.idMeal}`
-          }
+          // sharedTransitionTag={
+          //   fromSearch ? `search${item.idMeal}` : `img${item.idMeal}`
+          // }
           resizeMode="cover"
           style={{
             height: [210, 240, 190][index % 3],
@@ -50,4 +51,4 @@ const RecipeCard: React.FC<Props> = ({item, index, fromSearch}) => {
   );
 };
 
-export default RecipeCard;
+export default memo(RecipeCard);

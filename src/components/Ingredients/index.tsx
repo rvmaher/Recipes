@@ -1,7 +1,8 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import RecipeVideo from '../RecipeVideo';
-import {KeyPair} from '../../typings/common';
+import RecipeVideo from '@components/RecipeVideo';
+import {KeyPair} from '@typings/common';
+import {Meal} from '@typings/recipeAndMeal';
 
 const Ingredients = ({recipe}: {recipe: Meal}) => {
   return (
@@ -19,7 +20,7 @@ const Ingredients = ({recipe}: {recipe: Meal}) => {
           }
           return (
             <View key={idx} className="flex-row space-y-1 items-baseline">
-              <View className="bg-amber-400  rounded-full w-3 h-3 mx-2"></View>
+              <View className="bg-amber-400  rounded-full w-3 h-3 mx-2" />
               <Text className="text-xl text-neutral-900  tracking-widest">
                 {val1}
                 {' - '}

@@ -1,6 +1,7 @@
 import React from 'react';
 import {ActivityIndicator, FlatList, Text, View} from 'react-native';
-import RecipeCard from '../RecipeCard';
+import RecipeCard from '@components/RecipeCard';
+import {Recipe} from '@typings/recipeAndMeal';
 
 type Props = {
   recipes: Recipe[];
@@ -23,9 +24,11 @@ const Recipes: React.FC<Props> = ({recipes, isLoading, fromSearch}) => {
             </View>
           }
           numColumns={2}
+          initialNumToRender={5}
+          keyExtractor={item => item.idMeal}
           columnWrapperStyle={{columnGap: 10}}
           contentContainerStyle={{paddingBottom: 200}}
-          data={recipes}
+          data={recipes.slice(0, 19)}
           renderItem={({index, item}) => (
             <RecipeCard item={item} index={index} fromSearch={fromSearch} />
           )}
