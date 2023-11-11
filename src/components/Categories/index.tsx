@@ -12,6 +12,7 @@ const Categories: React.FC<Props> = ({activeCategory, setActiveCategory}) => {
   return (
     <ScrollView
       horizontal
+      showsHorizontalScrollIndicator={false}
       contentContainerStyle={{paddingHorizontal: 20}}
       className="mb-5 space-x-4">
       {categories.map((i, idx) => {

@@ -28,7 +28,7 @@ const Home: ScreenProps<'Home'> = ({navigation}) => {
             onPress={async () => {
               const res = await auth().signOut();
               console.log(res, 'this');
-              Alert.alert('Signin');
+              Alert.alert('Logged out successfully!');
             }}
             className="text-neutral-500 text-xl tracking-wider">
             <Text className="text-red-400  font-bold">Logout</Text>

@@ -41,9 +41,11 @@ const RecipeDetail: ScreenProps<'RecipeDetail'> = ({navigation, route}) => {
   }, []);
 
   return (
-    <ScrollView className="px-2" contentContainerStyle={{paddingBottom: 50}}>
+    <ScrollView
+      className="px-2 py-5"
+      contentContainerStyle={{paddingBottom: 50}}>
       <Animated.Image
-        sharedTransitionTag={`img${item.idMeal}`}
+        // sharedTransitionTag={`img${item.idMeal}`}
         resizeMode="cover"
         className="rounded-2xl mb-2"
         style={{height: 300, width: '100%'}}

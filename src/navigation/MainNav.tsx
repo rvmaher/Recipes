@@ -2,7 +2,7 @@ import auth from '@react-native-firebase/auth';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React, {useEffect} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {SafeAreaView,} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
 import Home from '../screens/Home';
 import RecipeDetail from '../screens/RecipeDetail';
@@ -11,6 +11,7 @@ import {login, logout} from '../store/features/authSlice';
 import {RootState} from '../store/store';
 import {MainStackScreenParams} from '../typings/navigation';
 import Login from '../screens/Login';
+import {StatusBar} from 'react-native';
 
 const {Navigator, Screen, Group} =
   createNativeStackNavigator<MainStackScreenParams>();
@@ -29,10 +30,10 @@ const MainNav = () => {
     });
     return unsubscribe;
   }, []);
-
   return (
     <SafeAreaView style={{flex: 1}}>
       <NavigationContainer>
+        <StatusBar hidden />
         <Navigator
           screenOptions={{animation: 'slide_from_left', headerShown: false}}>
           {(!user && <Screen name="Login" component={Login} />) || (

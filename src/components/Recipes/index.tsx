@@ -24,6 +24,7 @@ const Recipes: React.FC<Props> = ({recipes, isLoading, fromSearch}) => {
             </View>
           }
           numColumns={2}
+          initialNumToRender={5}
           columnWrapperStyle={{columnGap: 10}}
           contentContainerStyle={{paddingBottom: 200}}
           data={recipes}

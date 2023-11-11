@@ -72,7 +72,7 @@ const FirebaseLogin = () => {
             value={email}
             onChangeText={handleChange('email')}
             onBlur={handleBlur('email')}
-            className="bg-slate-50 w-full px-3 font-semibold tracking-wider rounded-md shadow-slate-500 shadow-lg"
+            className="bg-slate-50 w-full px-3 font-semibold tracking-wider rounded-md shadow-slate-500 "
           />
           {touched.email && errors.email && (
             <FormikError error={errors.email} />
@@ -84,7 +84,7 @@ const FirebaseLogin = () => {
             value={password}
             onChangeText={handleChange('password')}
             onBlur={handleBlur('password')}
-            className="bg-slate-50 w-full px-3 font-semibold tracking-wider rounded-md shadow-slate-500 shadow-lg"
+            className="bg-slate-50 w-full px-3 font-semibold tracking-wider rounded-md shadow-slate-500 "
           />
           {touched.password && errors.password && (
             <FormikError error={errors.password} />
