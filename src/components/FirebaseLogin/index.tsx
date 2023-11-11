@@ -1,19 +1,19 @@
 import React, {useState} from 'react';
-import {
-  ActivityIndicator,
-  Text,
-  TextInput,
-  ToastAndroid,
-  View,
-} from 'react-native';
+import {ActivityIndicator, Text, TextInput, View} from 'react-native';
 import CapsuleButton from '@components/CapsuleButton';
 import {FIREBASE_ERRORS} from '@constants/firebaseErrors';
 import auth from '@react-native-firebase/auth';
 import {user_iv, validationSchema} from '@typings/user';
 import {useFormik} from 'formik';
 import Animated, {FadeIn} from 'react-native-reanimated';
+import {useNavigation} from '@react-navigation/native';
+import {alert} from '@utils/helpers';
 
-const FirebaseLogin = () => {
+type Props = {
+  onSuccess: () => void;
+};
+
+const FirebaseLogin: React.FC<Props> = ({onSuccess}) => {
   const [isLoading, setIsLoading] = useState(false);
   const formik = useFormik({
     validationSchema,
@@ -35,18 +35,15 @@ const FirebaseLogin = () => {
   } = formik;
 
   const {email, password, isRegistering} = values;
-
   const handleRegister = () => {
     auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
-        ToastAndroid.show('Logged in!', 800);
+        onSuccess();
+        alert('Logged in!', 800);
       })
       .catch(err => {
-        ToastAndroid.show(
-          FIREBASE_ERRORS?.[err.code] || 'Something went wrong',
-          200,
-        );
+        alert(FIREBASE_ERRORS?.[err.code] || 'Something went wrong', 200);
       })
       .finally(() => setIsLoading(false));
   };
@@ -55,13 +52,11 @@ const FirebaseLogin = () => {
     auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        ToastAndroid.show('Logged in!', 800);
+        onSuccess();
+        alert('Logged in!', 800);
       })
       .catch(err => {
-        ToastAndroid.show(
-          FIREBASE_ERRORS?.[err.code] || 'Something went wrong',
-          200,
-        );
+        alert(FIREBASE_ERRORS?.[err.code] || 'Something went wrong', 200);
       })
       .finally(() => setIsLoading(false));
   };
@@ -81,7 +76,7 @@ const FirebaseLogin = () => {
             value={email}
             onChangeText={handleChange('email')}
             onBlur={handleBlur('email')}
-            className="bg-slate-50 w-full px-3 font-semibold tracking-wider rounded-md shadow-slate-500 "
+            className="bg-slate-50 h-10 w-full px-3 font-semibold tracking-wider rounded-md shadow-slate-500 "
           />
           {touched.email && errors.email && (
             <FormikError error={errors.email} />
@@ -93,7 +88,7 @@ const FirebaseLogin = () => {
             value={password}
             onChangeText={handleChange('password')}
             onBlur={handleBlur('password')}
-            className="bg-slate-50 w-full px-3 font-semibold tracking-wider rounded-md shadow-slate-500 "
+            className="bg-slate-50 h-10 w-full px-3 font-semibold tracking-wider rounded-md shadow-slate-500 "
           />
           {touched.password && errors.password && (
             <FormikError error={errors.password} />

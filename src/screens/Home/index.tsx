@@ -6,8 +6,9 @@ import {Category} from '@constants/categories';
 import auth from '@react-native-firebase/auth';
 import {useGetRecipeByCategoryQuery} from '@store/queries/recipeQuery';
 import {ScreenProps} from '@typings/navigation';
+import { alert } from '@utils/helpers';
 import React, {useState} from 'react';
-import {FlatList, StatusBar, Text, ToastAndroid, View} from 'react-native';
+import {FlatList, StatusBar, Text, View} from 'react-native';
 import Animated, {SlideInLeft} from 'react-native-reanimated';
 
 const Home: ScreenProps<'Home'> = ({navigation}) => {
@@ -16,7 +17,7 @@ const Home: ScreenProps<'Home'> = ({navigation}) => {
 
   const handleLogout = async () => {
     await auth().signOut();
-    ToastAndroid.show('Logged out successfully!', 400);
+    alert('Logged out successfully!', 400);
   };
 
   const {

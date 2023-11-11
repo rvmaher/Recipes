@@ -12,6 +12,7 @@ import Login from '@screens/Login';
 import RecipeDetail from '@screens/RecipeDetail';
 import Search from '@screens/Search';
 import {login, logout} from '@store/features/authSlice';
+import { sleep } from '@utils/helpers';
 
 const {Navigator, Screen, Group} =
   createNativeStackNavigator<MainStackScreenParams>();
@@ -21,8 +22,10 @@ const MainNav = () => {
   const user = useSelector((state: RootState) => state.authReducer.user);
 
   useEffect(() => {
-    const unsubscribe = auth().onAuthStateChanged(user => {
+    const unsubscribe = auth().onAuthStateChanged(async(user) => {
       if (user) {
+      // delaying becuase app crashes on modal open in this version on navigation library combo
+        await sleep(200)
         dispatch(login(user));
       } else {
         dispatch(logout());
