@@ -1,17 +1,14 @@
-import {Text, Image, ImageBackground, Pressable} from 'react-native';
-import React from 'react';
-import {DrawerHeaderProps, useDrawerProgress} from '@react-navigation/drawer';
-import Animated, {
-  interpolate,
-  interpolateColor,
-  useAnimatedStyle,
-} from 'react-native-reanimated';
 import {DrawerActions, useNavigation} from '@react-navigation/native';
-import useAuth from '../../hooks/useAuth';
+import React from 'react';
+import {Image, ImageBackground, Pressable, Text} from 'react-native';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../store/store';
 
 const Header = () => {
   const {dispatch} = useNavigation();
-  const {themeColor} = useAuth();
+  const themeColor = useSelector(
+    (state: RootState) => state.themeReducer.themeColor,
+  );
   return (
     <ImageBackground
       resizeMode="cover"

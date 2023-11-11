@@ -1,13 +1,13 @@
 import firestore from '@react-native-firebase/firestore';
-import React, { useEffect, useState } from 'react';
-import { Pressable, ScrollView, Text } from 'react-native';
-import Animated, { FadeIn, FadeInUp } from 'react-native-reanimated';
-import { useSelector } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {Pressable, ScrollView, Text} from 'react-native';
+import Animated, {FadeIn, FadeInUp} from 'react-native-reanimated';
+import {useSelector} from 'react-redux';
 import Ingredients from '../../components/Ingredients';
+import {useGetRecipeByIdQuery} from '../../store/queries/recipeQuery';
+import {RootState} from '../../store/store';
+import {ScreenProps} from '../../typings/navigation';
 import RecipeStats from '../../components/RecipeStats';
-import { useGetRecipeByIdQuery } from '../../store/queries/recipeQuery';
-import { RootState } from '../../store/store';
-import { ScreenProps } from '../../typings/navigation';
 
 const RecipeDetail: ScreenProps<'RecipeDetail'> = ({navigation, route}) => {
   const {item} = route.params;

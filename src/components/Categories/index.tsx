@@ -1,7 +1,9 @@
 import React from 'react';
 import {Image, Pressable, ScrollView, Text, View} from 'react-native';
 import Animated, {FadeInDown} from 'react-native-reanimated';
+import {useSelector} from 'react-redux';
 import {Category, categories} from '../../constants/categories';
+import {RootState} from '../../store/store';
 
 type Props = {
   activeCategory: Category;
@@ -9,6 +11,9 @@ type Props = {
 };
 
 const Categories: React.FC<Props> = ({activeCategory, setActiveCategory}) => {
+  const themeColor = useSelector(
+    (state: RootState) => state.themeReducer.themeColor,
+  );
   return (
     <ScrollView
       horizontal

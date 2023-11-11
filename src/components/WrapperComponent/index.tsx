@@ -9,12 +9,16 @@ import {
 import React from 'react';
 import Animated, {interpolate, useAnimatedStyle} from 'react-native-reanimated';
 import {useDrawerProgress} from '@react-navigation/drawer';
-import useAuth from '../../hooks/useAuth';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../store/store';
 
 const DrawerSceneWrapper = ({children}: {children: React.ReactNode}) => {
   const progress = useDrawerProgress();
   const {width} = useWindowDimensions();
-  const {themeColor} = useAuth();
+  const themeColor = useSelector(
+    (state: RootState) => state.themeReducer.themeColor,
+  );
+
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [
       {perspective: 1000},

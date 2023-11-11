@@ -1,16 +1,15 @@
-import {View, Text, Image} from 'react-native';
+import {DrawerContentComponentProps} from '@react-navigation/drawer';
 import React from 'react';
-import {
-  DrawerContentComponentProps,
-  DrawerContentScrollView,
-  DrawerItemList,
-} from '@react-navigation/drawer';
-import useAuth from '../../hooks/useAuth';
+import {Image, Text, View} from 'react-native';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../store/store';
 type Props = {
   props: DrawerContentComponentProps;
 };
 const DrawerBar: React.FC<Props> = ({props}) => {
-  const {themeColor} = useAuth();
+  const themeColor = useSelector(
+    (state: RootState) => state.themeReducer.themeColor,
+  );
   return (
     <View
       style={{
@@ -46,7 +45,7 @@ const DrawerBar: React.FC<Props> = ({props}) => {
           justifyContent: 'center',
           paddingTop: 50,
         }}>
-        {['Dashboard', 'Settings'].map(i => (
+        {['Home', 'Settings'].map(i => (
           <View key={i} style={{padding: 10}}>
             <Text
               className="text-pink-950 text-xl  tracking-widest"

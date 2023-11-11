@@ -1,7 +1,9 @@
 import React from 'react';
-import {ActivityIndicator, FlatList, Text, View} from 'react-native';
+import { ActivityIndicator, FlatList, Text, View } from 'react-native';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+import { Recipe } from '../../typings/recipeAndMeal';
 import RecipeCard from '../RecipeCard';
-import {Recipe} from '../../typings/recipeAndMeal';
 
 type Props = {
   recipes: Recipe[];
@@ -10,6 +12,9 @@ type Props = {
 };
 
 const Recipes: React.FC<Props> = ({recipes, isLoading, fromSearch}) => {
+  const themeColor = useSelector(
+    (state: RootState) => state.themeReducer.themeColor,
+  );
   return (
     <View className="px-4">
       <Text className="font-bold text-3xl tracking-wide mb-5">Recipes</Text>

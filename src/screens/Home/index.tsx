@@ -1,25 +1,31 @@
-import React, { useState } from 'react';
-import { FlatList, StatusBar, Text, View } from 'react-native';
-import Animated, { SlideInLeft } from 'react-native-reanimated';
+import React, {useState} from 'react';
+import {FlatList, StatusBar, Text, View} from 'react-native';
+import Animated, {SlideInLeft} from 'react-native-reanimated';
+import {useSelector} from 'react-redux';
 import Categories from '../../components/Categories';
+import Header from '../../components/Header';
 import Recipes from '../../components/Recipes';
 import SearchInput from '../../components/SearchInput';
-import { Category } from '../../constants/categories';
-import { useGetRecipeByCategoryQuery } from '../../store/queries/recipeQuery';
-import { ScreenProps } from '../../typings/navigation';
 import DrawerSceneWrapper from '../../components/WrapperComponent';
-import Header from '../../components/Header';
+import {Category} from '../../constants/categories';
+import {useGetRecipeByCategoryQuery} from '../../store/queries/recipeQuery';
+import {RootState} from '../../store/store';
+import {ScreenProps} from '../../typings/navigation';
 
 const Home: ScreenProps<'Home'> = ({navigation}) => {
-  const [activeCategory, setActiveCategory] = useState<Category>('Vegetarian');
+  const [activeCategory, setActiveCategory] = useState<Category>('Beef');
   const [search, setSearch] = useState<string>('');
+
+  const themeColor = useSelector(
+    (state: RootState) => state.themeReducer.themeColor,
+  );
 
   const {
     data: recipes = [],
     isLoading,
     isFetching,
   } = useGetRecipeByCategoryQuery(activeCategory);
-
+  console.log(recipes);
   return (
     <DrawerSceneWrapper>
       <FlatList
@@ -37,7 +43,7 @@ const Home: ScreenProps<'Home'> = ({navigation}) => {
                   className="text-neutral-500 text-base tracking-widest ">
                   Hello,{' '}
                   <Text style={{color: themeColor}} className="font-bold">
-                    {user}!
+                    Cutie!
                   </Text>
                 </Animated.Text>
                 <Text className="font-medium text-3xl text-neutral-400 tracking-wider ">
@@ -59,11 +65,11 @@ const Home: ScreenProps<'Home'> = ({navigation}) => {
               />
               <Categories
                 activeCategory={activeCategory}
-                setActiveCategory={handleCategoryChange}
+                setActiveCategory={setActiveCategory}
               />
               <Recipes
                 recipes={recipes}
-                isLoading={isLoading}
+                isLoading={isLoading || isFetching}
                 fromSearch={false}
               />
             </>

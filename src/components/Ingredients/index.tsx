@@ -3,8 +3,13 @@ import {View, Text} from 'react-native';
 import RecipeVideo from '../RecipeVideo';
 import {KeyPair} from '../../typings/common';
 import {Meal} from '../../typings/recipeAndMeal';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../store/store';
 
 const Ingredients = ({recipe}: {recipe: Meal}) => {
+  const themeColor = useSelector(
+    (state: RootState) => state.themeReducer.themeColor,
+  );
   return (
     <View className="mt-2 space-y-2">
       <Text className="tracking-widest text-neutral-900 text-3xl mb-2">

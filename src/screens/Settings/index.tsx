@@ -1,12 +1,17 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import DrawerSceneWrapper from '../../components/WrapperComponent';
-import { Colors } from '../../context/AppContext';
-import useAuth from '../../hooks/useAuth';
+import {Colors} from '../../constants/colors';
+import {changeTheme} from '../../store/features/themeSlice';
+import {RootState} from '../../store/store';
+import {ScreenProps} from '../../typings/navigation';
 
-const Settings = () => {
-  const {changeTheme, themeColor} = useAuth();
-
+const Settings: ScreenProps<'Settings'> = () => {
+  const themeColor = useSelector(
+    (state: RootState) => state.themeReducer.themeColor,
+  );
+  const dispatch = useDispatch();
   return (
     <DrawerSceneWrapper>
       <View style={[{backgroundColor: themeColor}, styles.container]}>
@@ -17,7 +22,7 @@ const Settings = () => {
           {Colors.map(i => (
             <Pressable
               key={i}
-              onPress={() => changeTheme(i)}
+              onPress={() => dispatch(changeTheme(i))}
               style={[styles.palletContainer, {backgroundColor: i}]}
             />
           ))}

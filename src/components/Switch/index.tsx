@@ -6,12 +6,16 @@ import Animated, {
   useDerivedValue,
   withSpring,
 } from 'react-native-reanimated';
-import useAuth from '../../hooks/useAuth';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../store/store';
 
 type Props = {value: boolean; onPress: () => void};
 
 const Switch: React.FC<Props> = ({onPress, value}) => {
-  const {themeColor} = useAuth();
+  const themeColor = useSelector(
+    (state: RootState) => state.themeReducer.themeColor,
+  );
+
   const switchVal = useDerivedValue(() => {
     return withSpring(value ? 28 : 0);
   }, [value]);

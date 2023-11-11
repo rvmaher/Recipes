@@ -1,9 +1,14 @@
 import {configureStore} from '@reduxjs/toolkit';
 import authReducer from './features/authSlice';
 import {recipeApi} from './queries/recipeQuery';
+import themeReducer from './features/themeSlice';
 
 const store = configureStore({
-  reducer: {authReducer, [recipeApi.reducerPath]: recipeApi.reducer},
+  reducer: {
+    authReducer,
+    themeReducer,
+    [recipeApi.reducerPath]: recipeApi.reducer,
+  },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,

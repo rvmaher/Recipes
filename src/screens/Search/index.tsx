@@ -5,6 +5,7 @@ import SearchInput from '../../components/SearchInput';
 import Recipes from '../../components/Recipes';
 import {fetchApi} from '../../utils/helpers';
 import DrawerSceneWrapper from '../../components/WrapperComponent';
+import {Recipe} from '../../typings/recipeAndMeal';
 
 const Search: ScreenProps<'Search'> = ({route}) => {
   const {searchString = ''} = route?.params || '';
