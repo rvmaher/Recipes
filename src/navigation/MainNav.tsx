@@ -24,7 +24,7 @@ const MainNav = () => {
   useEffect(() => {
     const unsubscribe = auth().onAuthStateChanged(async user => {
       if (user) {
-        // delaying becuase app crashes on modal open in this version on navigation library combo
+        // delaying because app crashes on modal open in this version on navigation library combo
         await sleep(200);
         dispatch(login(user));
       } else {
