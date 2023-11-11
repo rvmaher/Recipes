@@ -8,10 +8,10 @@ import {
   ToastAndroid,
   View,
 } from 'react-native';
-
 import {FIREBASE_ERRORS} from '../../constants/firebaseErrors';
 import {user_iv, validationSchema} from '../../typings/user';
 import CapsuleButton from '../CapsuleButton';
+import Animated, {FadeIn} from 'react-native-reanimated';
 
 const FirebaseLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -69,9 +69,12 @@ const FirebaseLogin = () => {
   return (
     <View className="flex-1 justify-center px-10">
       <View className="bg-slate-100 p-4 rounded-md items-center">
-        <Text className="text-amber-600 font-bold text-xl mb-2 tracking-widest">
+        <Animated.Text
+          entering={FadeIn.duration(500)}
+          key={isRegistering ? 're' : 'lo'}
+          className="text-amber-600 font-bold text-xl mb-2 tracking-widest">
           {isRegistering ? 'Register' : 'Login'}
-        </Text>
+        </Animated.Text>
         <View className="w-full space-y-2">
           <TextInput
             placeholder="Email"
