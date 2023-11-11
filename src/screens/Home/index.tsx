@@ -1,16 +1,22 @@
+import auth from '@react-native-firebase/auth';
 import React, {useState} from 'react';
-import {Alert, FlatList, StatusBar, Text, View} from 'react-native';
+import {FlatList, StatusBar, Text, ToastAndroid, View} from 'react-native';
 import Animated, {SlideInLeft} from 'react-native-reanimated';
+import CapsuleButton from '../../components/CapsuleButton';
 import Categories from '../../components/Categories';
 import Recipes from '../../components/Recipes';
 import SearchInput from '../../components/SearchInput';
 import {Category} from '../../constants/categories';
 import {useGetRecipeByCategoryQuery} from '../../store/queries/recipeQuery';
 import {ScreenProps} from '../../typings/navigation';
-import auth from '@react-native-firebase/auth';
 const Home: ScreenProps<'Home'> = ({navigation}) => {
-  const [activeCategory, setActiveCategory] = useState<Category>('Vegetarian');
+  const [activeCategory, setActiveCategory] = useState<Category>('Starter');
   const [search, setSearch] = useState<string>('');
+
+  const handleLogout = async () => {
+    await auth().signOut();
+    ToastAndroid.show('Logged out successfully!', 400);
+  };
 
   const {
     data: recipes = [],
@@ -20,19 +26,11 @@ const Home: ScreenProps<'Home'> = ({navigation}) => {
 
   return (
     <FlatList
+      className="py-2"
       data={['unique']}
-      className="space-y-3 pt-10"
       ListHeaderComponent={
-        <View>
-          <Text
-            onPress={async () => {
-              const res = await auth().signOut();
-              console.log(res, 'this');
-              Alert.alert('Logged out successfully!');
-            }}
-            className="text-neutral-500 text-xl tracking-wider">
-            <Text className="text-red-400  font-bold">Logout</Text>
-          </Text>
+        <View className="self-end mr-5 rounded">
+          <CapsuleButton btnText="Logout" onPress={handleLogout} />
         </View>
       }
       contentContainerStyle={{paddingBottom: 50}}
@@ -44,13 +42,13 @@ const Home: ScreenProps<'Home'> = ({navigation}) => {
               <Animated.Text
                 entering={SlideInLeft.delay(600).springify()}
                 className="text-neutral-500 text-base tracking-widest ">
-                Hello, <Text className="text-amber-400  font-bold">Cutie!</Text>
+                Hello<Text className="text-amber-400 font-bold">!</Text>
               </Animated.Text>
               <Text className="font-medium text-3xl text-neutral-400 tracking-wider ">
                 Make your own food,
               </Text>
               <Text className="text-neutral-500 text-xl tracking-wider">
-                stay at <Text className="text-amber-400  font-bold">Home</Text>
+                stay at <Text className="text-amber-400 font-bold">Home</Text>
               </Text>
             </View>
             <SearchInput

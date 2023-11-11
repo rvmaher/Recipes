@@ -12,7 +12,7 @@ const RecipeVideo = ({source}: {source: string}) => {
   return (
     <View>
       <Animated.View
-        entering={FadeIn}
+        entering={FadeIn.delay(1000)}
         layout={Layout.springify()}
         className="flex-row justify-between items-center">
         <Text className="tracking-widest text-neutral-900 text-3xl mt-4 mb-5">

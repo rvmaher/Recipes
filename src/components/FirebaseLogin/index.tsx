@@ -3,14 +3,15 @@ import {useFormik} from 'formik';
 import React, {useState} from 'react';
 import {
   ActivityIndicator,
-  Alert,
-  Pressable,
   Text,
   TextInput,
+  ToastAndroid,
   View,
 } from 'react-native';
 
+import {FIREBASE_ERRORS} from '../../constants/firebaseErrors';
 import {user_iv, validationSchema} from '../../typings/user';
+import CapsuleButton from '../CapsuleButton';
 
 const FirebaseLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -22,7 +23,6 @@ const FirebaseLogin = () => {
       v.isRegistering ? handleRegister() : handleLogin();
     },
   });
-
   const {
     values,
     handleChange,
@@ -39,11 +39,14 @@ const FirebaseLogin = () => {
   const handleRegister = () => {
     auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(res => {
-        Alert.alert('Logged in successfully');
+      .then(() => {
+        ToastAndroid.show('Logged in!', 800);
       })
       .catch(err => {
-        Alert.alert(err.message);
+        ToastAndroid.show(
+          FIREBASE_ERRORS?.[err.code] || 'Something went wrong',
+          200,
+        );
       })
       .finally(() => setIsLoading(false));
   };
@@ -51,11 +54,14 @@ const FirebaseLogin = () => {
   const handleLogin = () => {
     auth()
       .signInWithEmailAndPassword(email, password)
-      .then(res => {
-        Alert.alert('Logged in successfully');
+      .then(() => {
+        ToastAndroid.show('Logged in!', 800);
       })
       .catch(err => {
-        Alert.alert(err.message);
+        ToastAndroid.show(
+          FIREBASE_ERRORS?.[err.code] || 'Something went wrong',
+          200,
+        );
       })
       .finally(() => setIsLoading(false));
   };
@@ -93,26 +99,21 @@ const FirebaseLogin = () => {
         {isLoading ? (
           <ActivityIndicator color={'orange'} />
         ) : (
-          <Pressable
+          <CapsuleButton
+            btnText="Submit"
+            onPress={handleSubmit}
             disabled={!isValid}
-            className={`bg-amber-500 py-1 px-4 rounded-lg opacity-${
-              isValid ? 100 : 30
-            }`}
-            onPress={() => handleSubmit()}>
-            <Text className="text-white font-medium text-sm tracking-wider">
-              Ok
-            </Text>
-          </Pressable>
+          />
         )}
-        <Pressable
-          className="py-3 px-4 rounded-lg"
-          onPress={() => setFieldValue('isRegistering', !isRegistering)}>
-          <Text className="text-grey font-medium text-sm tracking-wider">
-            {isRegistering
+        <CapsuleButton
+          btnText={
+            isRegistering
               ? 'Already have an Account?'
-              : "Don't have an Account?"}
-          </Text>
-        </Pressable>
+              : "Don't have an Account?"
+          }
+          onPress={() => setFieldValue('isRegistering', !isRegistering)}
+          bgColor="bg-gray-400"
+        />
       </View>
     </View>
   );

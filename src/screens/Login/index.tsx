@@ -1,16 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Image,
-  Modal,
-  Pressable,
-  StatusBar,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import {Image, Modal, StatusBar, Text, View} from 'react-native';
 import Animated, {
   useSharedValue,
   withDelay,
+  withRepeat,
   withSpring,
 } from 'react-native-reanimated';
 import FirebaseLogin from '../../components/FirebaseLogin';
@@ -22,11 +15,11 @@ const Login: ScreenProps<'Login'> = ({navigation}) => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
+    ring1.value = withRepeat(withSpring(30), -1, true);
+    ring2.value = withRepeat(withDelay(300, withSpring(40)), -1, true);
     setTimeout(() => {
       setShowModal(true);
     }, 2500);
-    ring1.value = withSpring(30);
-    ring2.value = withDelay(300, withSpring(40));
   }, []);
   return (
     <View className="flex-1  justify-center items-center space-y-10 bg-amber-500">

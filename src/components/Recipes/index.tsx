@@ -25,12 +25,13 @@ const Recipes: React.FC<Props> = ({recipes, isLoading, fromSearch}) => {
           }
           numColumns={2}
           initialNumToRender={5}
+          keyExtractor={item => item.idMeal}
           columnWrapperStyle={{columnGap: 10}}
           contentContainerStyle={{paddingBottom: 200}}
-          data={recipes}
+          data={recipes.slice(0, 19)}
           renderItem={({index, item}) => (
             <RecipeCard
-              key={item.idMeal}
+              // key={item.idMeal}
               item={item}
               index={index}
               fromSearch={fromSearch}

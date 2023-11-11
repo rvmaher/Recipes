@@ -2,10 +2,12 @@ import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {Category} from '../../constants/categories';
 import {Meal} from '../../typings/recipeAndMeal';
 
+const baseUrl = 'https://www.themealdb.com/api/json/v1/1/';
+
 export const recipeApi = createApi({
   reducerPath: 'recipeApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://www.themealdb.com/api/json/v1/1/',
+    baseUrl,
     responseHandler: async response => {
       let data = await response.json();
       return data.meals;
