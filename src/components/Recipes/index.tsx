@@ -28,7 +28,12 @@ const Recipes: React.FC<Props> = ({recipes, isLoading, fromSearch}) => {
           contentContainerStyle={{paddingBottom: 200}}
           data={recipes}
           renderItem={({index, item}) => (
-            <RecipeCard item={item} index={index} fromSearch={fromSearch} />
+            <RecipeCard
+              key={item.idMeal}
+              item={item}
+              index={index}
+              fromSearch={fromSearch}
+            />
           )}
         />
       )}

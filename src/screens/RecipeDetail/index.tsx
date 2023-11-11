@@ -1,13 +1,14 @@
 import firestore from '@react-native-firebase/firestore';
-import React, { useEffect, useState } from 'react';
-import { Pressable, ScrollView, Text } from 'react-native';
-import Animated, { FadeIn, FadeInUp } from 'react-native-reanimated';
-import { useSelector } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {Pressable, ScrollView, Text} from 'react-native';
+import Animated, {FadeIn, FadeInUp} from 'react-native-reanimated';
+import {useSelector} from 'react-redux';
 import Ingredients from '../../components/Ingredients';
 import RecipeStats from '../../components/RecipeStats';
-import { useGetRecipeByIdQuery } from '../../store/queries/recipeQuery';
-import { RootState } from '../../store/store';
-import { ScreenProps } from '../../typings/navigation';
+import {useGetRecipeByIdQuery} from '../../store/queries/recipeQuery';
+import {RootState} from '../../store/store';
+import {ScreenProps} from '../../typings/navigation';
+import {KeyPair} from '../../typings/common';
 
 const RecipeDetail: ScreenProps<'RecipeDetail'> = ({navigation, route}) => {
   const {item} = route.params;
@@ -30,14 +31,13 @@ const RecipeDetail: ScreenProps<'RecipeDetail'> = ({navigation, route}) => {
   };
 
   useEffect(() => {
-    // const unsubscribe = userDocRef.onSnapshot(snapshotQuery => {
-    //   if (item?.idMeal in (snapshotQuery.data() as KeyPair)) {
-    //     setIsFavourite(true);
-    //   } else {
-    //     setIsFavourite(false);
-    //   }
-    // });
-    // return unsubscribe;
+    const unsubscribe = userDocRef.onSnapshot(snapshotQuery => {
+      const exists = snapshotQuery.exists;
+      if (exists)
+        setIsFavourite(item?.idMeal in (snapshotQuery.data() as KeyPair));
+      else userDocRef.set({});
+    });
+    return unsubscribe;
   }, []);
 
   return (

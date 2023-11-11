@@ -20,7 +20,3 @@ const authSlice = createSlice({
 
 export const {login, logout} = authSlice.actions;
 export default authSlice.reducer;
-
-// slice.actions.increment(2);
-// // also available:
-// slice.caseReducers.increment(0, {type: 'increment', payload: 5});

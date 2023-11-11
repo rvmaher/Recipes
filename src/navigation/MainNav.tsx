@@ -7,12 +7,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import Home from '../screens/Home';
 import RecipeDetail from '../screens/RecipeDetail';
 import Search from '../screens/Search';
-import Login from '../screens/Login';
 import {login, logout} from '../store/features/authSlice';
 import {RootState} from '../store/store';
 import {MainStackScreenParams} from '../typings/navigation';
+import Login from '../screens/Login';
 
-const {Navigator, Screen} = createNativeStackNavigator<MainStackScreenParams>();
+const {Navigator, Screen, Group} =
+  createNativeStackNavigator<MainStackScreenParams>();
 
 const MainNav = () => {
   const dispatch = useDispatch();
@@ -34,10 +35,13 @@ const MainNav = () => {
       <NavigationContainer>
         <Navigator
           screenOptions={{animation: 'slide_from_left', headerShown: false}}>
-          {/* {!user && <Screen name="Login" component={Login} />} */}
-          <Screen name="Home" component={Home} />
-          <Screen name="RecipeDetail" component={RecipeDetail} />
-          <Screen name="Search" component={Search} />
+          {(!user && <Screen name="Login" component={Login} />) || (
+            <Group>
+              <Screen name="Home" component={Home} />
+              <Screen name="RecipeDetail" component={RecipeDetail} />
+              <Screen name="Search" component={Search} />
+            </Group>
+          )}
         </Navigator>
       </NavigationContainer>
     </SafeAreaView>

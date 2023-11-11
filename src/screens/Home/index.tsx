@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { FlatList, StatusBar, Text, View } from 'react-native';
-import Animated, { SlideInLeft } from 'react-native-reanimated';
+import React, {useState} from 'react';
+import {Alert, FlatList, StatusBar, Text, View} from 'react-native';
+import Animated, {SlideInLeft} from 'react-native-reanimated';
 import Categories from '../../components/Categories';
 import Recipes from '../../components/Recipes';
 import SearchInput from '../../components/SearchInput';
-import { Category } from '../../constants/categories';
-import { useGetRecipeByCategoryQuery } from '../../store/queries/recipeQuery';
-import { ScreenProps } from '../../typings/navigation';
-
+import {Category} from '../../constants/categories';
+import {useGetRecipeByCategoryQuery} from '../../store/queries/recipeQuery';
+import {ScreenProps} from '../../typings/navigation';
+import auth from '@react-native-firebase/auth';
 const Home: ScreenProps<'Home'> = ({navigation}) => {
   const [activeCategory, setActiveCategory] = useState<Category>('Vegetarian');
   const [search, setSearch] = useState<string>('');
@@ -22,6 +22,19 @@ const Home: ScreenProps<'Home'> = ({navigation}) => {
     <FlatList
       data={['unique']}
       className="space-y-3 pt-10"
+      ListHeaderComponent={
+        <View>
+          <Text
+            onPress={async () => {
+              const res = await auth().signOut();
+              console.log(res, 'this');
+              Alert.alert('Signin');
+            }}
+            className="text-neutral-500 text-xl tracking-wider">
+            <Text className="text-red-400  font-bold">Logout</Text>
+          </Text>
+        </View>
+      }
       contentContainerStyle={{paddingBottom: 50}}
       renderItem={() => {
         return (
@@ -31,8 +44,7 @@ const Home: ScreenProps<'Home'> = ({navigation}) => {
               <Animated.Text
                 entering={SlideInLeft.delay(600).springify()}
                 className="text-neutral-500 text-base tracking-widest ">
-                Hello,{' '}
-                <Text className="text-amber-400  font-bold">Good Morning!</Text>
+                Hello, <Text className="text-amber-400  font-bold">Cutie!</Text>
               </Animated.Text>
               <Text className="font-medium text-3xl text-neutral-400 tracking-wider ">
                 Make your own food,

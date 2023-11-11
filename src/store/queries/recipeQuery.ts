@@ -1,5 +1,6 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {Category} from '../../constants/categories';
+import {Meal} from '../../typings/recipeAndMeal';
 
 export const recipeApi = createApi({
   reducerPath: 'recipeApi',
@@ -10,17 +11,22 @@ export const recipeApi = createApi({
       return data.meals;
     },
   }),
-  keepUnusedDataFor: 10000,
+  keepUnusedDataFor: 1000,
   endpoints: builder => ({
-    getRecipeByCategory: builder.query<Recipe[], Category>({
+    getRecipeByCategory: builder.query<Meal[], Category>({
       query: category => `filter.php?c=${category}`,
     }),
     getRecipeById: builder.query<Meal[], string>({
       query: mealId => `lookup.php?i=${mealId}`,
     }),
+    getRecipeBySearchstring: builder.query<Meal[], string>({
+      query: searchQuery => `search.php?s=${searchQuery}`,
+    }),
   }),
 });
 
-// Export hooks for usage in functional components, which are
-// auto-generated based on the defined endpoints
-export const {useGetRecipeByCategoryQuery, useGetRecipeByIdQuery} = recipeApi;
+export const {
+  useGetRecipeByCategoryQuery,
+  useGetRecipeByIdQuery,
+  useLazyGetRecipeBySearchstringQuery,
+} = recipeApi;
