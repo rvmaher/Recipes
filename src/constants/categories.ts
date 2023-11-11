@@ -61,4 +61,6 @@ export const categories = [
     strCategoryThumb:
       'https://www.themealdb.com/images/category/vegetarian.png',
   },
-].reverse();
+] as const;
+
+export type Category = (typeof categories)[number]['strCategory'];

@@ -2,6 +2,7 @@ import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Pressable, Text} from 'react-native';
 import Animated, {FadeInDown} from 'react-native-reanimated';
+import {Recipe} from '../../typings/recipeAndMeal';
 
 type Props = {
   item: Recipe;

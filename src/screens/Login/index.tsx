@@ -1,31 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Image,
-  Modal,
-  Pressable,
-  StatusBar,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import {Image, StatusBar, Text, View} from 'react-native';
 import Animated, {
   useSharedValue,
   withDelay,
   withSpring,
 } from 'react-native-reanimated';
+import FirebaseLogin from '../../components/FirebaseLogin';
 import {ScreenProps} from '../../typings/navigation';
-import useAuth from '../../hooks/useAuth';
 
-const Welcome: ScreenProps<'Welcome'> = ({navigation}) => {
+const Login: ScreenProps<'Login'> = ({navigation}) => {
   const ring1 = useSharedValue(0);
   const ring2 = useSharedValue(0);
-  const {handleUser} = useAuth();
   const [name, setName] = useState<string>('');
   const [showModal, setShowModal] = useState(false);
   const handleSubmit = () => {
     if (name) {
       setShowModal(false);
-      handleUser(name);
       navigation.navigate('Home');
     }
   };
@@ -59,7 +49,8 @@ const Welcome: ScreenProps<'Welcome'> = ({navigation}) => {
           Recipes at your fingertips
         </Text>
       </View>
-      <Modal visible={showModal} transparent animationType="fade">
+      <FirebaseLogin />
+      {/* <Modal visible={showModal} transparent animationType="fade">
         <View className="flex-1 justify-center px-10">
           <View className="bg-slate-100 p-4 rounded-md items-center">
             <Text className="text-amber-600 font-bold text-xl mb-2 tracking-widest">
@@ -80,9 +71,9 @@ const Welcome: ScreenProps<'Welcome'> = ({navigation}) => {
             </Pressable>
           </View>
         </View>
-      </Modal>
+      </Modal> */}
     </View>
   );
 };
 
-export default Welcome;
+export default Login;

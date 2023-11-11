@@ -1,6 +1,7 @@
 import React from 'react';
 import {ActivityIndicator, FlatList, Text, View} from 'react-native';
 import RecipeCard from '../RecipeCard';
+import {Recipe} from '../../typings/recipeAndMeal';
 
 type Props = {
   recipes: Recipe[];

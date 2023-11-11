@@ -1,11 +1,11 @@
 import React from 'react';
 import {Image, Pressable, ScrollView, Text, View} from 'react-native';
 import Animated, {FadeInDown} from 'react-native-reanimated';
-import {categories} from '../../constants/categories';
+import {Category, categories} from '../../constants/categories';
 
 type Props = {
-  activeCategory: string;
-  setActiveCategory: (category: string) => void;
+  activeCategory: Category;
+  setActiveCategory: (category: Category) => void;
 };
 
 const Categories: React.FC<Props> = ({activeCategory, setActiveCategory}) => {

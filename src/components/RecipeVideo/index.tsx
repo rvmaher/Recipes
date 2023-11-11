@@ -1,6 +1,6 @@
 import {useRef, useState} from 'react';
 import {View, Text} from 'react-native';
-import Animated, {FadeInUp} from 'react-native-reanimated';
+import Animated, {FadeIn, FadeInUp, Layout} from 'react-native-reanimated';
 import WebView from 'react-native-webview';
 import Switch from '../Switch';
 
@@ -11,7 +11,10 @@ const RecipeVideo = ({source}: {source: string}) => {
   const [showVideo, setShowVideo] = useState(false);
   return (
     <View>
-      <View className="flex-row justify-between items-center">
+      <Animated.View
+        entering={FadeIn}
+        layout={Layout.springify()}
+        className="flex-row justify-between items-center">
         <Text className="tracking-widest text-neutral-900 text-3xl mt-4 mb-5">
           Recipe Video
         </Text>
@@ -21,7 +24,7 @@ const RecipeVideo = ({source}: {source: string}) => {
             setShowVideo(p => !p);
           }}
         />
-      </View>
+      </Animated.View>
       {showVideo && (
         <Animated.View entering={FadeInUp.duration(200).springify()}>
           <WebView

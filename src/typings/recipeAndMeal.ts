@@ -59,3 +59,28 @@ type Meal = {
   strCreativeCommonsConfirmed: string;
   dateModified: string;
 };
+
+export const RECIPE_STATS = [
+  {
+    icon: 'https://img.icons8.com/sf-regular-filled/48/racism.png',
+    text: 'Servs',
+    range: 7,
+  },
+  {
+    icon: 'https://img.icons8.com/ios/100/clock--v1.png',
+    text: ' Mins',
+    range: 59,
+  },
+  {
+    icon: 'https://img.icons8.com/sf-regular-filled/96/fire-element.png',
+    text: 'calories',
+    range: 99,
+  },
+  {
+    icon: 'https://img.icons8.com/external-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto/64/external-speedometer-marketing-and-seo-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto.png',
+    text: '',
+    range: 3,
+  },
+];
+
+export type {Meal, Recipe};

@@ -1,25 +1,43 @@
-import React, {useEffect, useState} from 'react';
-import {Image, Pressable, ScrollView, Text, View} from 'react-native';
-import Animated, {FadeIn, FadeInUp} from 'react-native-reanimated';
+import firestore from '@react-native-firebase/firestore';
+import React, { useEffect, useState } from 'react';
+import { Pressable, ScrollView, Text } from 'react-native';
+import Animated, { FadeIn, FadeInUp } from 'react-native-reanimated';
+import { useSelector } from 'react-redux';
 import Ingredients from '../../components/Ingredients';
-import useAuth from '../../hooks/useAuth';
-import {ScreenProps} from '../../typings/navigation';
-import {fetchApi, randomNumber} from '../../utils/helpers';
+import RecipeStats from '../../components/RecipeStats';
+import { useGetRecipeByIdQuery } from '../../store/queries/recipeQuery';
+import { RootState } from '../../store/store';
+import { ScreenProps } from '../../typings/navigation';
 
 const RecipeDetail: ScreenProps<'RecipeDetail'> = ({navigation, route}) => {
   const {item} = route.params;
-  const [recipeDetail, setRecipeDetail] = useState<Meal | undefined>(undefined);
-  const {handleFavourites, favouriteItems} = useAuth();
+  const [isFavourite, setIsFavourite] = useState(false);
+  const user = useSelector((state: RootState) => state.authReducer.user);
+  const {data: recipeDetail = []} = useGetRecipeByIdQuery(item?.idMeal);
 
-  const getMealDetails = async () => {
-    let result = await fetchApi(
-      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${item.idMeal}`,
-    );
-    setRecipeDetail(result[0]);
+  const userDocRef = firestore().collection('users').doc(user?.uid);
+
+  const handleFavourites = () => {
+    if (!isFavourite) {
+      userDocRef.update({
+        [item.idMeal]: item.idMeal,
+      });
+    } else {
+      userDocRef.update({
+        [item.idMeal]: firestore.FieldValue.delete(),
+      });
+    }
   };
 
   useEffect(() => {
-    getMealDetails();
+    // const unsubscribe = userDocRef.onSnapshot(snapshotQuery => {
+    //   if (item?.idMeal in (snapshotQuery.data() as KeyPair)) {
+    //     setIsFavourite(true);
+    //   } else {
+    //     setIsFavourite(false);
+    //   }
+    // });
+    // return unsubscribe;
   }, []);
 
   return (
@@ -47,9 +65,9 @@ const RecipeDetail: ScreenProps<'RecipeDetail'> = ({navigation, route}) => {
         <Pressable
           className="
            bg-white rounded-full p-3 mx-4 mt-2"
-          onPress={() => handleFavourites(item?.idMeal)}>
+          onPress={() => handleFavourites()}>
           <Animated.Image
-            tintColor={item?.idMeal in favouriteItems ? 'red' : 'grey'}
+            tintColor={isFavourite ? 'red' : 'grey'}
             resizeMode="cover"
             style={{height: 20, width: 20}}
             source={require('../../assets/like.png')}
@@ -59,71 +77,12 @@ const RecipeDetail: ScreenProps<'RecipeDetail'> = ({navigation, route}) => {
       <Animated.View entering={FadeIn.delay(600)}>
         <Text className="text-2xl tracking-widest mb-3 ">{item.strMeal}</Text>
         <Text className="text-xl text-neutral-600 tracking-widest mb-3 ">
-          {recipeDetail?.strArea}
+          {recipeDetail[0]?.strArea}
         </Text>
       </Animated.View>
       <Animated.View entering={FadeInUp.duration(1000)}>
-        <View className="flex-row justify-around">
-          <View
-            className="flex bg-amber-300 rounded-full p-2 items-center space-y-2 py-4"
-            style={{width: 65}}>
-            <View className="bg-white rounded-full p-[6px] py-2">
-              <Image
-                style={{height: 20, width: 20}}
-                source={{uri: 'https://img.icons8.com/ios/100/clock--v1.png'}}
-              />
-            </View>
-            <Text className="font-bold text-xs text-neutral-700 text-center">
-              {randomNumber(50, item?.idMeal) + 9} Mins
-            </Text>
-          </View>
-          <View
-            className="flex bg-amber-300 rounded-full p-2 items-center space-y-2 py-4"
-            style={{width: 65}}>
-            <View className="bg-white rounded-full p-[6px] py-2">
-              <Image
-                style={{height: 20, width: 20}}
-                source={{
-                  uri: 'https://img.icons8.com/sf-regular-filled/48/racism.png',
-                }}
-              />
-            </View>
-            <Text className="font-bold text-xs text-neutral-700 text-center">
-              {randomNumber(5, item?.idMeal) + 2} Servs
-            </Text>
-          </View>
-          <View
-            className="flex bg-amber-300 rounded-full p-2 items-center space-y-2 py-4"
-            style={{width: 65}}>
-            <View className="bg-white rounded-full p-[6px] py-2">
-              <Image
-                style={{height: 20, width: 20}}
-                source={{
-                  uri: 'https://img.icons8.com/sf-regular-filled/96/fire-element.png',
-                }}
-              />
-            </View>
-            <Text className="font-bold text-xs text-neutral-700 text-center">
-              {randomNumber(99, item?.idMeal)} calories
-            </Text>
-          </View>
-          <View
-            className="flex bg-amber-300 rounded-full p-2 items-center space-y-2 py-4"
-            style={{width: 65}}>
-            <View className="bg-white rounded-full p-[6px] py-2">
-              <Image
-                style={{height: 20, width: 20}}
-                source={{
-                  uri: 'https://img.icons8.com/external-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto/64/external-speedometer-marketing-and-seo-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto.png',
-                }}
-              />
-            </View>
-            <Text className="font-bold text-xs text-neutral-700 text-center">
-              {['Easy', 'Medium', 'Hard'][randomNumber(3, item?.idMeal)]}
-            </Text>
-          </View>
-        </View>
-        <Ingredients recipe={recipeDetail!} />
+        <RecipeStats item={item} />
+        <Ingredients recipe={recipeDetail[0]} />
       </Animated.View>
     </ScrollView>
   );

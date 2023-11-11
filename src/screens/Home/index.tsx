@@ -1,39 +1,22 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, StatusBar, Text, View} from 'react-native';
-import Animated, {SlideInLeft} from 'react-native-reanimated';
+import React, { useState } from 'react';
+import { FlatList, StatusBar, Text, View } from 'react-native';
+import Animated, { SlideInLeft } from 'react-native-reanimated';
 import Categories from '../../components/Categories';
 import Recipes from '../../components/Recipes';
 import SearchInput from '../../components/SearchInput';
-import useAuth from '../../hooks/useAuth';
-import {ScreenProps} from '../../typings/navigation';
-import {fetchApi} from '../../utils/helpers';
+import { Category } from '../../constants/categories';
+import { useGetRecipeByCategoryQuery } from '../../store/queries/recipeQuery';
+import { ScreenProps } from '../../typings/navigation';
 
 const Home: ScreenProps<'Home'> = ({navigation}) => {
-  const [activeCategory, setActiveCategory] = useState('');
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<Category>('Vegetarian');
   const [search, setSearch] = useState<string>('');
-  const {user} = useAuth();
 
-  const handleCategoryChange = React.useCallback(
-    async (category: string) => {
-      if (category === activeCategory) {
-        return;
-      }
-      setActiveCategory(category);
-      setIsLoading(true);
-      const result = await fetchApi(
-        `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`,
-      );
-      setRecipes(result);
-      setIsLoading(false);
-    },
-    [activeCategory],
-  );
-
-  useEffect(() => {
-    handleCategoryChange('Vegetarian');
-  }, []);
+  const {
+    data: recipes = [],
+    isLoading,
+    isFetching,
+  } = useGetRecipeByCategoryQuery(activeCategory);
 
   return (
     <FlatList
@@ -49,7 +32,7 @@ const Home: ScreenProps<'Home'> = ({navigation}) => {
                 entering={SlideInLeft.delay(600).springify()}
                 className="text-neutral-500 text-base tracking-widest ">
                 Hello,{' '}
-                <Text className="text-amber-400  font-bold">{user}!</Text>
+                <Text className="text-amber-400  font-bold">Good Morning!</Text>
               </Animated.Text>
               <Text className="font-medium text-3xl text-neutral-400 tracking-wider ">
                 Make your own food,
@@ -67,11 +50,11 @@ const Home: ScreenProps<'Home'> = ({navigation}) => {
             />
             <Categories
               activeCategory={activeCategory}
-              setActiveCategory={handleCategoryChange}
+              setActiveCategory={setActiveCategory}
             />
             <Recipes
               recipes={recipes}
-              isLoading={isLoading}
+              isLoading={isLoading || isFetching}
               fromSearch={false}
             />
           </>

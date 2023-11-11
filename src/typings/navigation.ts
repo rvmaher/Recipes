@@ -1,7 +1,8 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {Recipe} from './recipeAndMeal';
 
 type MainStackScreenParams = {
-  Welcome: undefined;
+  Login: undefined;
   Home: undefined;
   RecipeDetail: {item: Recipe};
   Search: {searchString: string};
