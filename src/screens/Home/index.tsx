@@ -17,7 +17,7 @@ const Home: ScreenProps<'Home'> = ({navigation}) => {
 
   const handleLogout = async () => {
     await auth().signOut();
-    alert('Logged out successfully!', 400);
+    alert('Logged out!', 400);
   };
 
   const {
