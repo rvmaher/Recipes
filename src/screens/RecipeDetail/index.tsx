@@ -33,9 +33,11 @@ const RecipeDetail: ScreenProps<'RecipeDetail'> = ({navigation, route}) => {
   useEffect(() => {
     const unsubscribe = userDocRef.onSnapshot(snapshotQuery => {
       const exists = snapshotQuery.exists;
-      if (exists)
+      if (exists) {
         setIsFavourite(item?.idMeal in (snapshotQuery.data() as KeyPair));
-      else userDocRef.set({});
+      } else {
+        userDocRef.set({});
+      }
     });
     return unsubscribe;
   }, []);

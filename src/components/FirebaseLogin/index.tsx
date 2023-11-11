@@ -6,7 +6,6 @@ import auth from '@react-native-firebase/auth';
 import {user_iv, validationSchema} from '@typings/user';
 import {useFormik} from 'formik';
 import Animated, {FadeIn} from 'react-native-reanimated';
-import {useNavigation} from '@react-navigation/native';
 import {alert} from '@utils/helpers';
 
 type Props = {
@@ -76,7 +75,7 @@ const FirebaseLogin: React.FC<Props> = ({onSuccess}) => {
             value={email}
             onChangeText={handleChange('email')}
             onBlur={handleBlur('email')}
-            className="bg-slate-50 h-10 w-full px-3 font-semibold tracking-wider rounded-md shadow-slate-500 "
+            className="bg-slate-50 h-10 w-full px-3 font-semibold tracking-wider rounded-md"
           />
           {touched.email && errors.email && (
             <FormikError error={errors.email} />
@@ -88,7 +87,7 @@ const FirebaseLogin: React.FC<Props> = ({onSuccess}) => {
             value={password}
             onChangeText={handleChange('password')}
             onBlur={handleBlur('password')}
-            className="bg-slate-50 h-10 w-full px-3 font-semibold tracking-wider rounded-md shadow-slate-500 "
+            className="bg-slate-50 h-10 w-full px-3 font-semibold tracking-wider rounded-md"
           />
           {touched.password && errors.password && (
             <FormikError error={errors.password} />

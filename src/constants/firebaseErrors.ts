@@ -13,6 +13,8 @@ const FIREBASE_ERRORS: KeyPair = {
     'Too many requests have been made to the Firebase Authentication service.',
   'auth/invalid-login':
     'The email address or password is incorrect, or the account has been disabled.',
+  'auth/internal-error':
+    'An unexpected error occurred while processing your request. Please try again later',
 };
 
 export {FIREBASE_ERRORS};

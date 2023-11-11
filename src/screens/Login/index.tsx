@@ -19,8 +19,7 @@ const Login: ScreenProps<'Login'> = ({}) => {
     setTimeout(() => {
       setShowModal(true);
     }, 2500);
-    return setShowModal(false)
-    
+    return setShowModal(false);
   }, []);
   return (
     <View className="flex-1  justify-center items-center space-y-10 bg-amber-500">
@@ -45,11 +44,10 @@ const Login: ScreenProps<'Login'> = ({}) => {
           Recipes at your fingertips
         </Text>
       </View>
-      <Modal  visible={showModal} transparent animationType="fade">
-        <FirebaseLogin  onSuccess={()=>setShowModal(false)} />
+      <Modal visible={showModal} transparent animationType="fade">
+        <FirebaseLogin onSuccess={() => setShowModal(false)} />
       </Modal>
     </View>
   );
 };
-
 export default Login;

@@ -10,7 +10,7 @@ type Props = {
   fromSearch: boolean;
 };
 
-const RecipeCard: React.FC<Props> = ({item, index, fromSearch}) => {
+const RecipeCard: React.FC<Props> = ({item, index}) => {
   const {navigate} = useNavigation();
   return (
     <Animated.View

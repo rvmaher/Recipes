@@ -35,12 +35,11 @@ const CapsuleButton: React.FC<CapsuleButtonProps> = ({
   return (
     <Animated.View style={animatedStyle}>
       <Pressable
+        style={{opacity: disabled ? 0.4 : 1}}
         onPressIn={() => handlePress(5)}
         onPressOut={() => handlePress(0)}
         disabled={disabled}
-        className={`${bgColor} py-1 px-4 rounded-lg my-2 opacity-${
-          disabled ? 60 : 100
-        }`}
+        className={`${bgColor} py-1 px-4 rounded-lg my-2`}
         onPress={onPress}>
         <Text className="text-white font-medium text-sm tracking-wider">
           {btnText}

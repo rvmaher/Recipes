@@ -1,5 +1,5 @@
 import Switch from '@components/Switch';
-import {useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {View, Text} from 'react-native';
 import Animated, {FadeIn, FadeInUp, Layout} from 'react-native-reanimated';
 import WebView from 'react-native-webview';

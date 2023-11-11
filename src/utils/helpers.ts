@@ -1,15 +1,16 @@
-import { Alert, Platform, ToastAndroid } from "react-native";
+import {Alert, Platform, ToastAndroid} from 'react-native';
 
 const randomNumber = (number: number, id: string) => {
   return Math.ceil(Number(id) % number);
 };
 
+const alert = (text: string, duration: number = 800) => {
+  Platform.OS === 'android'
+    ? ToastAndroid.show(text, duration)
+    : Alert.alert(text);
+};
 
-const alert=(text:string,duration:number=800)=>{
-  Platform.OS==="android"? ToastAndroid.show(text,duration) : Alert.alert(text)
-}
-
-const sleep=(delay:number)=>new Promise(res=>setTimeout(res, delay))
+const sleep = (delay: number) => new Promise(res => setTimeout(res, delay));
 
 const DIFFICULTIES = ['Easy', 'Medium', 'Hard'];
 
@@ -20,4 +21,4 @@ const getStat = (text: string, range: number, id: string) => {
   return statText;
 };
 
-export {getStat,alert,sleep};
+export {getStat, alert, sleep};
